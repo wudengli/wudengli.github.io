@@ -1,0 +1,81 @@
+$(function(){
+	//搜索按钮
+	var a = 0
+	$("#btn_search").click(function(){
+		a++;
+		if(a == 1){
+			$("#search_area").slideDown();
+		}else{
+			$("#search_area").slideUp();
+			a = 0;
+		}
+	});
+	
+
+	
+	//nav 导航
+	$(".nav>ul>li").hover(function(){
+		var ul = $(this).find("ul li");
+
+		if(ul.length > 0){
+			$("#subnav").show(100);
+		}
+		$(this).find(".submenu").css("display","");
+		$(this).find(".submenu").find("li").eq(0).addClass("active");
+		$(this).find(".submenu").find("li").eq(0).find(".subtext").show();
+	},function(){
+		var ul = $(this).find("ul li");
+		if(ul.length > 0){
+			$("#subnav").hide();
+		}
+		$(this).find(".submenu").hide();
+		$(this).find(".submenu").find("li").removeClass("active");
+		$(this).find(".submenu").find("li").find(".subtext").hide();
+	});
+	//二级菜单
+	$(".submenu > li").hover(function(){
+		$(".submenu > li").removeClass("active");
+		$(this).addClass("active");
+	});
+	$(".submenu>li").hover(function(){
+		var ul = $(this).find("ul li");
+		if(ul.length > 0){
+			$("#subnav").show(100);
+		}
+		$(".submenu>li").find(".subtext").hide();
+		$(this).find(".subtext").css("display","block");
+		//三级菜单
+		$(".submenu>li").find(".submenu2").hide();
+		$(this).find(".submenu2").css("display","block");
+	});
+});
+/*******解决firefox不兼容animate******/
+	(function($) {
+
+	var div = document.createElement('div'),
+		rposition = /([^ ]*) (.*)/;
+	  
+	if(div.style.backgroundPositionX !== '') {
+		$(['X', 'Y']).each(function( i, letter ) {
+			var property = 'backgroundPosition' + letter,
+				isX = letter == 'X';
+			$.cssHooks[property] = {
+				set: function(elem, value) {
+					var current = elem.style.backgroundPosition;
+					elem.style.backgroundPosition = (isX? value + ' ' : '' ) + (current? current.match(rposition)[isX+1] : '0') + (isX? '' : ' ' + value);
+				},
+				get: function(elem, computed) {
+					var current = computed?
+						$.css(elem, 'backgroundPosition') :
+						elem.style.backgroundPosition;
+					return current.match(rposition)[!isX+1];
+				}
+			};
+			$.fx.step[property] = function(fx) {
+				$.cssHooks[property].set(fx.elem, fx.now + fx.unit);
+			}
+		});
+	}
+	div = null;
+
+	})(jQuery);
