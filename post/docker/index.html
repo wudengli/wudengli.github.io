@@ -1,0 +1,667 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Docker | best7l</title>
+<link rel="shortcut icon" href="https://wudengli.github.io/favicon.ico?v=1634873811556">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://wudengli.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Docker | best7l - Atom Feed" href="https://wudengli.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="Docker
+安装
+
+
+卸载旧版本
+sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+  ..." />
+    <meta name="keywords" content="Docker,nginx" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://wudengli.github.io">
+  <img class="avatar" src="https://wudengli.github.io/images/avatar.png?v=1634873811556" alt="">
+  </a>
+  <h1 class="site-title">
+    best7l
+  </h1>
+  <p class="site-description">
+    Talk is cheap, give me the code!
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Docker
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-09-17
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://wudengli.github.io/tag/_fV1dzqCF/" class="post-tag">
+                  # Docker
+                </a>
+              
+                <a href="https://wudengli.github.io/tag/qniX6ekAk/" class="post-tag">
+                  # nginx
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://wudengli.github.io/post-images/docker.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="docker">Docker</h1>
+<h3 id="安装">安装</h3>
+<ol>
+<li>
+<p><strong>卸载旧版本</strong></p>
+<pre><code>sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+</code></pre>
+</li>
+<li>
+<p><strong>下载需要的安装包</strong></p>
+<pre><code>sudo yum install -y yum-utils
+</code></pre>
+</li>
+<li>
+<p><strong>设置仓库镜像</strong></p>
+<pre><code>sudo yum-config-manager \
+    --add-repo \
+    https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo  #默认为国外
+    
+sudo yum makecache fast # 更新yum索引
+</code></pre>
+</li>
+<li>
+<p><strong>安装docker</strong></p>
+<pre><code>sudo yum install docker-ce docker-ce-cli containerd.io
+</code></pre>
+</li>
+<li>
+<p><strong>启动docker</strong></p>
+<pre><code>sudo systemctl start docker
+</code></pre>
+</li>
+<li>
+<p><strong>测试docker镜像</strong></p>
+<pre><code>sudo docker run hello-world
+</code></pre>
+</li>
+<li>
+<p><strong>查看镜像</strong></p>
+<pre><code>sudo docker images
+</code></pre>
+</li>
+</ol>
+<h3 id="卸载">卸载</h3>
+<ol>
+<li>
+<p><strong>卸载docker环境</strong></p>
+<pre><code>sudo yum remove docker-ce docker-ce-cli containerd.io
+</code></pre>
+</li>
+<li>
+<p><strong>卸载docker</strong></p>
+<pre><code>sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+</code></pre>
+</li>
+</ol>
+<h3 id="常用指令">常用指令</h3>
+<ul>
+<li>
+<p>启动docker</p>
+<pre><code>sudo systemctl start docker
+
+sudo systemctl restart docker  #重启
+
+</code></pre>
+</li>
+<li>
+<p>docker常用运行方式</p>
+<pre><code>-d #后台加载
+-it #交互运行
+-p #绑定端口
+-v #绑定挂载目录
+</code></pre>
+</li>
+<li>
+<p>docker ps      #查看docker进程</p>
+</li>
+<li>
+<p>docker images          #查看镜像</p>
+</li>
+<li>
+<p>docker commit -m       #提交镜像文件</p>
+</li>
+<li>
+<p>docker save             #保存镜像文件</p>
+</li>
+<li>
+<p>docker pull               #获取镜像</p>
+</li>
+<li>
+<p>docker run               将镜像加载到容器</p>
+</li>
+<li>
+<p>docker up                 将镜像更新启动到容器</p>
+</li>
+<li>
+<p>docker start             开启容器</p>
+</li>
+</ul>
+<h3 id="docker-compose">docker-compose</h3>
+<ol>
+<li>
+<p>创建docker-compose目录</p>
+<pre><code>mkdir docker-compose
+</code></pre>
+</li>
+<li>
+<p>安装docker-compose</p>
+<pre><code>cd docker-compose
+
+vim docker-compose.yml
+upstream
+
+</code></pre>
+</li>
+<li>
+<p>利用dockerFile定义运行环境镜像</p>
+</li>
+<li>
+<p>使用docker-compose.yml定义组成应用的各服务</p>
+</li>
+<li>
+<p>运行docker-compose up</p>
+</li>
+</ol>
+<h3 id="提交个人配置镜像">提交个人配置镜像</h3>
+<h3 id="dockerfile">DockerFile</h3>
+<h3 id="搭建私有docker仓库">搭建私有docker仓库</h3>
+<h3 id="laravel-环境搭建">laravel 环境搭建</h3>
+<h3 id="laradock-搭建多版本php">laradock 搭建多版本php</h3>
+<ol>
+<li>
+<p><strong>.env 文件修改</strong></p>
+<pre><code>DB_HOST=mysql
+REDIS_HOST=redis
+QUEUE_HOST=beanstalkd
+PHP56=5.6          #添加php5.6常量
+</code></pre>
+</li>
+<li>
+<p><strong>打开docker-compose.yml文件(主要修改两处)</strong></p>
+<ul>
+<li>
+<p>新增 <code>PHP-FPM-56</code> 配置项</p>
+</li>
+<li>
+<p>LARADOCK_PHP_VERSION=${PHP56}</p>
+</li>
+<li>
+<p>ports:<br>
+- &quot;19003:19003&quot;</p>
+</li>
+</ul>
+<pre><code>### PHP-FPM-56 ##############################################
+    php-fpm-56:
+      build:
+        context: ./php-fpm-56
+        args:
+          - CHANGE_SOURCE=${CHANGE_SOURCE}
+          - BASE_IMAGE_TAG_PREFIX=${PHP_FPM_BASE_IMAGE_TAG_PREFIX}
+          - LARADOCK_PHP_VERSION=${PHP56}
+          - LARADOCK_PHALCON_VERSION=${PHALCON_VERSION}
+          - INSTALL_BZ2=${PHP_FPM_INSTALL_BZ2}
+          - INSTALL_ENCHANT=${PHP_FPM_INSTALL_ENCHANT}
+          - INSTALL_GMP=${PHP_FPM_INSTALL_GMP}
+          - INSTALL_GNUPG=${PHP_FPM_INSTALL_GNUPG}
+          - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+          - INSTALL_PCOV=${PHP_FPM_INSTALL_PCOV}
+          - INSTALL_PHPDBG=${PHP_FPM_INSTALL_PHPDBG}
+          - INSTALL_BLACKFIRE=${INSTALL_BLACKFIRE}
+          - INSTALL_SSH2=${PHP_FPM_INSTALL_SSH2}
+          - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
+          - INSTALL_XSL=${PHP_FPM_INSTALL_XSL}
+          - INSTALL_SMB=${PHP_FPM_INSTALL_SMB}
+          - INSTALL_IMAP=${PHP_FPM_INSTALL_IMAP}
+          - INSTALL_MONGO=${PHP_FPM_INSTALL_MONGO}
+          - INSTALL_AMQP=${PHP_FPM_INSTALL_AMQP}
+          - INSTALL_CASSANDRA=${PHP_FPM_INSTALL_CASSANDRA}
+          - INSTALL_GEARMAN=${PHP_FPM_INSTALL_GEARMAN}
+          - INSTALL_MSSQL=${PHP_FPM_INSTALL_MSSQL}
+          - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+          - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
+          - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
+          - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
+          - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
+          - INSTALL_AEROSPIKE=${PHP_FPM_INSTALL_AEROSPIKE}
+          - INSTALL_OCI8=${PHP_FPM_INSTALL_OCI8}
+          - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
+          - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+          - INSTALL_PG_CLIENT=${PHP_FPM_INSTALL_PG_CLIENT}
+          - INSTALL_POSTGIS=${PHP_FPM_INSTALL_POSTGIS}
+          - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
+          - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+          - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
+          - INSTALL_PHALCON=${PHP_FPM_INSTALL_PHALCON}
+          - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
+          - INSTALL_TAINT=${PHP_FPM_INSTALL_TAINT}
+          - INSTALL_IMAGE_OPTIMIZERS=${PHP_FPM_INSTALL_IMAGE_OPTIMIZERS}
+          - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
+          - INSTALL_CALENDAR=${PHP_FPM_INSTALL_CALENDAR}
+          - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
+          - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
+          - INSTALL_APCU=${PHP_FPM_INSTALL_APCU}
+          - INSTALL_CACHETOOL=${PHP_FPM_INSTALL_CACHETOOL}
+          - INSTALL_YAML=${PHP_FPM_INSTALL_YAML}
+          - INSTALL_RDKAFKA=${PHP_FPM_INSTALL_RDKAFKA}
+          - INSTALL_GETTEXT=${PHP_FPM_INSTALL_GETTEXT}
+          - INSTALL_ADDITIONAL_LOCALES=${PHP_FPM_INSTALL_ADDITIONAL_LOCALES}
+          - INSTALL_MYSQL_CLIENT=${PHP_FPM_INSTALL_MYSQL_CLIENT}
+          - INSTALL_PING=${PHP_FPM_INSTALL_PING}
+          - INSTALL_SSHPASS=${PHP_FPM_INSTALL_SSHPASS}
+          - INSTALL_MAILPARSE=${PHP_FPM_INSTALL_MAILPARSE}
+          - INSTALL_PCNTL=${PHP_FPM_INSTALL_PCNTL}
+          - ADDITIONAL_LOCALES=${PHP_FPM_ADDITIONAL_LOCALES}
+          - INSTALL_FFMPEG=${PHP_FPM_FFMPEG}
+          - INSTALL_AUDIOWAVEFORM=${PHP_FPM_AUDIOWAVEFORM}
+          - INSTALL_WKHTMLTOPDF=${PHP_FPM_INSTALL_WKHTMLTOPDF}
+          - INSTALL_XHPROF=${PHP_FPM_INSTALL_XHPROF}
+          - INSTALL_XMLRPC=${PHP_FPM_INSTALL_XMLRPC}
+          - INSTALL_PHPDECIMAL=${PHP_FPM_INSTALL_PHPDECIMAL}
+          - INSTALL_ZOOKEEPER=${PHP_FPM_INSTALL_ZOOKEEPER}
+          - INSTALL_SSDB=${PHP_FPM_INSTALL_SSDB}
+          - DOWNGRADE_OPENSSL_TLS_AND_SECLEVEL=${PHP_DOWNGRADE_OPENSSL_TLS_AND_SECLEVEL}
+          - PUID=${PHP_FPM_PUID}
+          - PGID=${PHP_FPM_PGID}
+          - IMAGEMAGICK_VERSION=${PHP_FPM_IMAGEMAGICK_VERSION}
+          - LOCALE=${PHP_FPM_DEFAULT_LOCALE}
+          - PHP_FPM_NEW_RELIC=${PHP_FPM_NEW_RELIC}
+          - PHP_FPM_NEW_RELIC_KEY=${PHP_FPM_NEW_RELIC_KEY}
+          - PHP_FPM_NEW_RELIC_APP_NAME=${PHP_FPM_NEW_RELIC_APP_NAME}
+          - INSTALL_DOCKER_CLIENT=${PHP_FPM_INSTALL_DOCKER_CLIENT}
+          - http_proxy
+          - https_proxy
+          - no_proxy
+      volumes:
+        - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+        - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+        - docker-in-docker:/certs/client
+      ports:
+        - &quot;19003:19003&quot;
+      expose:
+        - &quot;9000&quot;
+      extra_hosts:
+        - &quot;dockerhost:${DOCKER_HOST_IP}&quot;
+      environment:
+        - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+        - DOCKER_HOST=tcp://docker-in-docker:2376
+        - DOCKER_TLS_VERIFY=1
+        - DOCKER_TLS_CERTDIR=/certs
+        - DOCKER_CERT_PATH=/certs/client
+        - FAKETIME=${PHP_FPM_FAKETIME}
+      depends_on:
+        - workspace
+      networks:
+        - backend
+      links:
+        - docker-in-docker
+</code></pre>
+</li>
+<li>
+<p><strong>打开</strong> <code>/var/www/laradock/nginx/sites/</code> <strong>目录项目文件配置</strong></p>
+<ul>
+<li>注意端口号</li>
+<li>fastcgi_pass 修改为php-fpm-56:9000</li>
+</ul>
+<pre><code>location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-56:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+</code></pre>
+</li>
+<li>
+<p><strong>注意事项, 启动失败可能是端口冲突, 我们需要查看进程是否正常</strong></p>
+</li>
+</ol>
+<h3 id="laradock-配置nginx端口中的映射">laradock 配置nginx端口中的映射</h3>
+<ul>
+<li>
+<p>正向代理</p>
+<pre><code>- 使单个域名对应的端口号对应单个项目
+
+- vim /var/www/laradock/nginx/dockerFile
+  修改 EXPOSE 80 81 443 8888
+
+- vim /var/www/laradock/nginx/sites/laravel.conf #配置端口映射
+
+server {
+
+    listen 8888;
+    listen [::]:8888;
+
+    # For https
+    # listen 443 ssl;
+    # listen [::]:443 ssl ipv6only=on;
+    # ssl_certificate /etc/nginx/ssl/default.crt;
+    # ssl_certificate_key /etc/nginx/ssl/default.key;
+
+    server_name myproject.test;
+    root /var/www/laraFile/public;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/laravel_error.log;
+    access_log /var/log/nginx/laravel_access.log;
+}
+
+- /var/www/laradock/docker-compose.yml #添加端口映射
+
+### NGINX Server #########################################
+    nginx:
+      build:
+        context: ./nginx
+        args:
+          - CHANGE_SOURCE=${CHANGE_SOURCE}
+          - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
+          - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+          - http_proxy
+          - https_proxy
+          - no_proxy
+      volumes:
+        - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+        - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+        - ${NGINX_SSL_PATH}:/etc/nginx/ssl
+      ports:
+        - &quot;${NGINX_HOST_HTTP_PORT}:80&quot;
+        - &quot;${NGINX_HOST_HTTPS_PORT}:443&quot;
+        - &quot;${VARNISH_BACKEND_PORT}:81&quot;
+        - &quot;${MY_PROJECT_PORT}:8888&quot;
+      depends_on:
+        - php-fpm
+      networks:
+        - frontend
+        - backend
+
+- vim /var/www/laradock/.env         #配置.env文件
+
+### Paths #################################################
+
+DB_HOST=mysql
+REDIS_HOST=redis
+QUEUE_HOST=beanstalkd
+PHP56=5.6
+MY_PROJECT_PORT=8888
+</code></pre>
+</li>
+<li>
+<p>反向代理</p>
+<ul>
+<li>添加代理cluster</li>
+<li>proxy_pass http://cluster;</li>
+</ul>
+<pre><code>upstream cluster {
+     server 192.168.20.128;
+}
+
+server {
+
+    listen 8888;
+    listen [::]:8888;
+
+    # For https
+    # listen 443 ssl;
+    # listen [::]:443 ssl ipv6only=on;
+    # ssl_certificate /etc/nginx/ssl/default.crt;
+    # ssl_certificate_key /etc/nginx/ssl/default.key;
+
+    server_name myproject.test;
+    root /var/www/laraFile/public;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+         proxy_pass http://cluster;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/laravel_error.log;
+    access_log /var/log/nginx/laravel_access.log;
+}
+</code></pre>
+</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#docker">Docker</a><br>
+*
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%8D%B8%E8%BD%BD">卸载</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4">常用指令</a></li>
+<li><a href="#docker-compose">docker-compose</a></li>
+<li><a href="#%E6%8F%90%E4%BA%A4%E4%B8%AA%E4%BA%BA%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F">提交个人配置镜像</a></li>
+<li><a href="#dockerfile">DockerFile</a></li>
+<li><a href="#%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89docker%E4%BB%93%E5%BA%93">搭建私有docker仓库</a></li>
+<li><a href="#laravel-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">laravel 环境搭建</a></li>
+<li><a href="#laradock-%E6%90%AD%E5%BB%BA%E5%A4%9A%E7%89%88%E6%9C%ACphp">laradock 搭建多版本php</a></li>
+<li><a href="#laradock-%E9%85%8D%E7%BD%AEnginx%E7%AB%AF%E5%8F%A3%E4%B8%AD%E7%9A%84%E6%98%A0%E5%B0%84">laradock 配置nginx端口中的映射</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://wudengli.github.io/post/php-zhi-shi-dian/">
+              <h3 class="post-title">
+                php知识点
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '6543bdbd544d719f31cc',
+    clientSecret: '54cca1ceaeacd3e1c06375b0ec7eeb7c1fb01d15',
+    repo: 'JTX-comment',
+    owner: 'best7l',
+    admin: ['best7l'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://wudengli.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

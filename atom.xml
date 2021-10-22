@@ -1,0 +1,2806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://wudengli.github.io</id>
+    <title>best7l</title>
+    <updated>2021-10-22T03:37:01.051Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://wudengli.github.io"/>
+    <link rel="self" href="https://wudengli.github.io/atom.xml"/>
+    <subtitle>Talk is cheap, give me the code!</subtitle>
+    <logo>https://wudengli.github.io/images/avatar.png</logo>
+    <icon>https://wudengli.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, best7l</rights>
+    <entry>
+        <title type="html"><![CDATA[DDD领域设计]]></title>
+        <id>https://wudengli.github.io/post/ddd-ling-yu-she-ji/</id>
+        <link href="https://wudengli.github.io/post/ddd-ling-yu-she-ji/">
+        </link>
+        <updated>2021-09-25T08:07:02.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="ddd领域设计">DDD领域设计</h1>
+<p>简介: ddd领域设计是一种架构思想，将一个大的业务进行拆分为领域，分域里拆分为子域，子域由核心域，支撑域，通用域构成。通过限界上下文将子域进行聚合，从而向外界领域提供服务。</p>
+<h3 id="领域">领域</h3>
+<p>将一个问题抽象为业务领域，从而达到解决问题的目的，将领域划分为子域，从而将问题细分，最后聚合到一起达到解决问题的过程。</p>
+<h3 id="子域">子域</h3>
+<ul>
+<li>
+<p>核心域</p>
+<pre><code>通俗来说是业务的核心,拥有核心竞争力的子域, 其他衍生域需要通过核心域才能进行业务的实现.
+</code></pre>
+</li>
+<li>
+<p>支撑域</p>
+<pre><code>不是公司必须的领域, 但是其他的功能需要该域来支撑实现,我们称之为支撑域.
+</code></pre>
+</li>
+<li>
+<p>通用域</p>
+<pre><code>服务于多个领域, 不服务个性化需要的子域.
+</code></pre>
+</li>
+</ul>
+<h3 id="限界上下文">限界上下文</h3>
+<p>将子域中的问题边界进行划分, 从而子域中的问题进行上下承接,我们称之为限界上下文.</p>
+<h3 id="领域模型">领域模型</h3>
+<p>将一个问题建立为一个业务模型, 用于分析复杂业务类型.</p>
+<h3 id="值对象">值对象</h3>
+<p>为其添加有意义的属性，并赋予它相应的行为。我们需要将值对象看成不变对象，不要给它任何身份标识，还应该尽量避免像实体对象一样的复杂性.</p>
+<h3 id="应用服务领域服务">应用服务&amp;领域服务</h3>
+<ul>
+<li>
+<p>应用服务</p>
+<pre><code>我们的应用服务通常不处理具体业务,通过调用领域服务从而聚合来实现解决问题.
+</code></pre>
+</li>
+<li>
+<p>领域服务</p>
+<pre><code>领域服务通常取解决该领域的问题,通过调用仓库与持久化实体,从而达到服务的过程.
+</code></pre>
+</li>
+</ul>
+<h3 id="聚合">聚合</h3>
+<p>通俗来说,就是将问题细分到最小,然后将其聚集起来,解决一个大的问题的过程,我们称之为聚合.</p>
+<h3 id="工厂">工厂</h3>
+<pre><code>工厂将领域对象的使用和创建分离。
+通过使用工厂类，可以隐藏创建复杂领域对象的业务逻辑。
+工厂类可以根据调用者的需要，创建相应的领域对象。
+工厂方法可以封装聚合的内部状态。
+</code></pre>
+<h3 id="常用ddd目录模型">常用ddd目录模型</h3>
+<pre><code>-- module
+  -- interfaces 用户接口层
+          -- assembler  实现DTO之间的转换
+          -- dto 数据传输的载体
+          -- facade 提供较粗粒度的调用接口,将请求委派给一个或多个应用服务处理
+  -- application 应用层
+          -- event 事件
+                  -- publish  事件发布
+                  -- subscribe 事件订阅
+          -- service 应用服务(调用领域服务完成某个业务问题)
+  -- domain  领域层
+          -- aggregate名称 聚合根目录
+                   --contract     抽象(定义interface)
+                   --entity       实体
+                   --event        事件
+                   --repostory    仓储(处理数据)
+                   --service      领域服务(处理业务)
+                   --enums        枚举
+                   --resouces     资源类型
+                   
+          -- aggregate名称 聚合根目录
+                   --contract     抽象
+                   --entity       实体
+                   --event        事件
+                   --repostory    仓储
+                   --service      领域服务
+                   --enums        枚举
+                   --resouces     资源类型
+                   
+          -- aggregate名称 聚合根目录
+                   --contract     抽象
+                   --entity       实体
+                   --event        事件
+                   --repostory    仓储
+                   --service      领域服务
+                   --enums        枚举
+                   --resouces     资源类型
+                   
+  -- intrastructure 基础设施层
+          -- config 存放配置相关
+          -- database  数据库
+          -- cache  缓存
+          -- trait 基础服务
+          -- helper 基础组件
+          -- unit 存放第三方服务
+                   -- eventbug 事件总线
+                   -- mq 消息中间件
+</code></pre>
+<p>Repostory.php</p>
+<pre><code>&lt;?php
+
+class TestRepostory
+{
+      public function model()
+      {
+      
+      }
+      
+      public function __construct()
+      {
+      
+      }
+      
+      /**
+       *获取
+       */
+      public function get()
+      {
+      
+      }
+      
+      /**
+       *更新
+       */
+      public function update()
+      {
+      
+      }
+      
+      /**
+       *存储或更新
+       */
+      public function save()
+      {
+      
+      }
+      
+      /**
+       *储存
+       */
+      public function store()
+      {
+      
+      }
+      
+      /**
+       *释放
+       */
+      public function delete()
+      {
+      
+      }
+}
+
+?&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用laradock配置kafka应用]]></title>
+        <id>https://wudengli.github.io/post/shi-yong-laradock-pei-zhi-kafka-ying-yong/</id>
+        <link href="https://wudengli.github.io/post/shi-yong-laradock-pei-zhi-kafka-ying-yong/">
+        </link>
+        <updated>2021-09-21T11:47:27.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="使用laradock-配置kafka应用">使用laradock 配置kafka应用</h3>
+<h3 id="1-先安装zookeeper">1. 先安装zookeeper</h3>
+<pre><code>docker-compose up -d zookeeper
+</code></pre>
+<h3 id="2-安装kafka">2. 安装kafka</h3>
+<pre><code># 需要先安装zookeeper,不然启动kafka会报错
+docker-compose up -d kafka
+</code></pre>
+<h3 id="3-修改docker-compose配置">3. 修改docker-compose配置</h3>
+<ul>
+<li>编辑env文件新增</li>
+</ul>
+<pre><code>KAFKA_ADVERTISED_HOST=192.168.20.128
+</code></pre>
+<ul>
+<li>修改php-fpm 与 workspace rdkafka扩展</li>
+</ul>
+<pre><code>PHP_FPM_INSTALL_RDKAFKA=true
+
+WORKSPACE_INSTALL_RDKAFKA=true
+</code></pre>
+<ul>
+<li>修改docker-compose 文件</li>
+</ul>
+<pre><code>### kafka ####################################################
+    kafka:
+      image: wurstmeister/kafka
+      ports:
+        - &quot;9092:9092&quot;
+      environment:
+        KAFKA_BROKER_ID: 1
+        KAFKA_ADVERTISED_HOST_NAME: ${KAFKA_ADVERTISED_HOST}
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_ADVERTISED_HOST}:9092
+        KAFKA_MESSAGE_MAX_BYTES: 2000000
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      volumes:
+        - ${DATA_PATH_HOST}/kafka:/kafka
+        - /var/run/docker.sock:/var/run/docker.sock
+      networks:
+        - backend
+</code></pre>
+<h3 id="4-安装kafka-php-包">4. 安装kafka-php 包</h3>
+<pre><code>compose require nmred/kafka-php
+</code></pre>
+<h3 id="5-测试">5. 测试</h3>
+<ul>
+<li>producer.php</li>
+</ul>
+<pre><code>&lt;?php
+require __DIR__ . &quot;/../vendor/autoload.php&quot;;
+date_default_timezone_set('PRC');
+//use Monolog\Logger;
+//use Monolog\Handler\StdoutHandler;
+// Create the logger
+//$logger = new Logger('my_logger');
+// Now add some handlers
+//$logger-&gt;pushHandler(new StdoutHandler());
+
+$config = \Kafka\ProducerConfig::getInstance();
+$config-&gt;setMetadataRefreshIntervalMs(10000);
+$config-&gt;setMetadataBrokerList('192.168.20.128:9092');
+$config-&gt;setBrokerVersion('1.0.0');
+$config-&gt;setRequiredAck(1);
+$config-&gt;setIsAsyn(false);
+$config-&gt;setProduceInterval(500);
+$producer = new \Kafka\Producer(
+    function() {
+        return [
+            [
+                'topic' =&gt; 'test',
+                'value' =&gt; 'test....message.333333',
+                'key' =&gt; 'testkey',
+            ],
+        ];
+    }
+);
+//$producer-&gt;setLogger($logger);
+$producer-&gt;success(function($result) {
+    var_dump($result);
+});
+$producer-&gt;error(function($errorCode) {
+    var_dump($errorCode);
+});
+$producer-&gt;send(true);
+</code></pre>
+<ul>
+<li>consumer.php</li>
+</ul>
+<pre><code>&lt;?php
+require __DIR__ . &quot;/../vendor/autoload.php&quot;;
+
+$objRdKafka = new RdKafka\Consumer();
+$objRdKafka-&gt;setLogLevel(LOG_DEBUG);
+$objRdKafka-&gt;addBrokers(&quot;192.168.20.128:9092&quot;);
+
+$oObjTopic = $objRdKafka-&gt;newTopic(&quot;test&quot;);
+
+/**
+ * consumeStart
+ *   第一个参数标识分区，生产者是往分区0发送的消息，这里也从分区0拉取消息
+ *   第二个参数标识从什么位置开始拉取消息，可选值为
+ *     RD_KAFKA_OFFSET_BEGINNING : 从开始拉取消息
+ *     RD_KAFKA_OFFSET_END : 从当前位置开始拉取消息
+ *     RD_KAFKA_OFFSET_STORED : 猜测跟RD_KAFKA_OFFSET_END一样
+ */
+$oObjTopic-&gt;consumeStart(0, RD_KAFKA_OFFSET_END);
+
+while (true) {
+    // 第一个参数是分区，第二个参数是超时时间
+    $oMsg = $oObjTopic-&gt;consume(0, 1000);
+
+    // 没拉取到消息时，返回NULL
+    if (!$oMsg) {
+        usleep(10000);
+        continue;
+    }
+
+    if ($oMsg-&gt;err) {
+        echo $oMsg-&gt;errstr(), &quot;\n&quot;;
+        break;
+    } else {
+        echo $oMsg-&gt;payload, &quot;\n&quot;;
+    }
+}
+</code></pre>
+<h3 id="6-该消息队列可以使用策略工厂模式进行封装使用">6. 该消息队列可以使用策略工厂模式进行封装使用.</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[PHP常见算法]]></title>
+        <id>https://wudengli.github.io/post/php-chang-jian-suan-fa/</id>
+        <link href="https://wudengli.github.io/post/php-chang-jian-suan-fa/">
+        </link>
+        <updated>2021-09-20T04:49:30.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="php常见算法">PHP常见算法</h1>
+<h3 id="冒泡排序">冒泡排序</h3>
+<pre><code>function dubbleSort($arr)
+{
+    $length = count($arr);
+    if ($length == 1) return $arr;
+    for ($i = 0; $i &lt; $length; $i++) {
+        $isOver = false
+      for ($j = 0; $j &lt; $length - $i - 1; $j++) {
+          if ($arr[$j] &gt; $arr[$j + 1]) {
+              $temp = $arr[$j];
+              $arr[$j] = $arr[$j + 1];
+              $arr[$j + 1] = $temp;
+              $isOver = true;
+          }
+      }
+      if (!$isOver) {
+          break;
+      }
+   }
+    return $arr;
+}
+</code></pre>
+<h3 id="选择排序">选择排序</h3>
+<pre><code>function selectSort($arr)
+{
+   $len = count($arr);
+   for($i = 0;$i&lt;$length -1;$i++){
+      $min = $i;
+      for($j = $i + 1;$j&lt;$length;$j++){
+         if($arr[$j] &lt; $arr[$i]){
+              $min = $j;
+         }
+      }
+      
+      if($i != $min){
+          $temp = $arr[$i];
+          $arr[$i] = $arr[$min];
+          $arr[$min] = $temp;
+      }
+   }
+   return $arr;
+}
+</code></pre>
+<h3 id="快速排序">快速排序</h3>
+<pre><code>function quickSort($arr)
+{
+    if(count($arr) &lt;= 1) return $arr;
+    
+    $mid = $arr[0];
+    $left = [];
+    $right = [];
+    
+    for($i = 1;$i&lt;count($arr);$i++){
+       if($arr[$i] &gt; $mid){
+            $right[] = $arr[$i];
+       }else{
+            $left[] = $arr[$i];
+       }
+    }
+    
+    $left = quickSort($left);
+    $right = quickSort($right);
+    
+    return array_merge($left,[$mid],$right);
+}
+</code></pre>
+<h3 id="插入排序">插入排序</h3>
+<pre><code>function insertSort($arr)
+{
+    $length = count($arr);
+    for ($i = 1; $i &lt; $length; $i++) {
+        $pos = $i;
+        $key = $arr[$i];
+        while ($pos &gt; 0 &amp;&amp; $arr[$pos - 1] &gt; $key) {
+            $arr[$pos] = $arr[$pos - 1];
+            $pos = $pos - 1;
+        }
+        $arr[$pos] = $key;
+    }
+    return $arr;
+}
+</code></pre>
+<h3 id="二分查找">二分查找</h3>
+<pre><code class="language-php">function search($arr, $target)
+{
+    return recursion(&amp;$arr, 0, count($arr) - 1, $target);
+}
+
+function recursion($arr, $l, $r, $tarfet)
+{
+    $mid = intval(($l + $r) / 2);
+    if ($l &gt; $r) return -1;
+    if ($target &gt; $arr[$mid]) {
+        return recursion($arr, $arr[$mid] + 1, $r, $tarfet);
+    } elseif ($target &lt; $arr[$mid]) {
+        return recursion($arr, $l, $arr[$mid] - 1, $tarfet);
+    } else {
+        return $mid;
+    }
+}
+</code></pre>
+<h3 id="字符串反转">字符串反转</h3>
+<pre><code>function str_rev($str)
+{
+     $i = 0;
+     while(1){
+       if(!isset($str)){
+          break;
+       }
+       $i++;
+     }
+     for($j = $i -1;$j&gt;=0;$j--){
+          $temp .= $str[$j];
+     }
+     return $temp;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[phpStorm同步代码到虚拟机]]></title>
+        <id>https://wudengli.github.io/post/phpstorm-tong-bu-dai-ma-dao-xu-ni-ji/</id>
+        <link href="https://wudengli.github.io/post/phpstorm-tong-bu-dai-ma-dao-xu-ni-ji/">
+        </link>
+        <updated>2021-09-19T03:00:31.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="phpstorm-代码使用sftp协议同步到虚拟机">phpStorm 代码使用sftp协议同步到虚拟机</h3>
+<p>前言:我们在开发及测试过程中, 可能项目放在VMware中或远程的虚拟机中, 那么本地物理机如何同步代码到远程呢.下面窝为大家来讲解.</p>
+<ol>
+<li><strong>选择创建类型</strong></li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://wudengli.github.io/post-images/1632020557418.png" alt="" loading="lazy"></figure>
+<ol start="2">
+<li><strong>选择连接方式</strong></li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://wudengli.github.io/post-images/1632020609435.png" alt="" loading="lazy"></figure>
+<ol start="3">
+<li><strong>选择本地项目</strong></li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://wudengli.github.io/post-images/1632020757131.png" alt="" loading="lazy"></figure>
+<ol start="4">
+<li><strong>配置选项</strong></li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://wudengli.github.io/post-images/1632020638473.png" alt="" loading="lazy"></figure>
+<ol start="5">
+<li><strong>尝试连接</strong></li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://wudengli.github.io/post-images/1632020671590.png" alt="" loading="lazy"></figure>
+<ol start="6">
+<li><strong>该错误可能是虚拟机中的nginx服务器没开,所以连接不上</strong><br>
+<img src="https://wudengli.github.io/post-images/1632020780767.png" alt="" loading="lazy"></li>
+</ol>
+<p>7.<strong>绑定域名及映射文件夹</strong>(注意,若是VMware,物理机需要配置host)</p>
+<figure data-type="image" tabindex="6"><img src="https://wudengli.github.io/post-images/1632020803895.png" alt="" loading="lazy"></figure>
+<p>8.<strong>测试</strong></p>
+<figure data-type="image" tabindex="7"><img src="https://wudengli.github.io/post-images/1632020840957.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Docker]]></title>
+        <id>https://wudengli.github.io/post/docker/</id>
+        <link href="https://wudengli.github.io/post/docker/">
+        </link>
+        <updated>2021-09-17T07:12:07.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="docker">Docker</h1>
+<h3 id="安装">安装</h3>
+<ol>
+<li>
+<p><strong>卸载旧版本</strong></p>
+<pre><code>sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+</code></pre>
+</li>
+<li>
+<p><strong>下载需要的安装包</strong></p>
+<pre><code>sudo yum install -y yum-utils
+</code></pre>
+</li>
+<li>
+<p><strong>设置仓库镜像</strong></p>
+<pre><code>sudo yum-config-manager \
+    --add-repo \
+    https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo  #默认为国外
+    
+sudo yum makecache fast # 更新yum索引
+</code></pre>
+</li>
+<li>
+<p><strong>安装docker</strong></p>
+<pre><code>sudo yum install docker-ce docker-ce-cli containerd.io
+</code></pre>
+</li>
+<li>
+<p><strong>启动docker</strong></p>
+<pre><code>sudo systemctl start docker
+</code></pre>
+</li>
+<li>
+<p><strong>测试docker镜像</strong></p>
+<pre><code>sudo docker run hello-world
+</code></pre>
+</li>
+<li>
+<p><strong>查看镜像</strong></p>
+<pre><code>sudo docker images
+</code></pre>
+</li>
+</ol>
+<h3 id="卸载">卸载</h3>
+<ol>
+<li>
+<p><strong>卸载docker环境</strong></p>
+<pre><code>sudo yum remove docker-ce docker-ce-cli containerd.io
+</code></pre>
+</li>
+<li>
+<p><strong>卸载docker</strong></p>
+<pre><code>sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+</code></pre>
+</li>
+</ol>
+<h3 id="常用指令">常用指令</h3>
+<ul>
+<li>
+<p>启动docker</p>
+<pre><code>sudo systemctl start docker
+
+sudo systemctl restart docker  #重启
+
+</code></pre>
+</li>
+<li>
+<p>docker常用运行方式</p>
+<pre><code>-d #后台加载
+-it #交互运行
+-p #绑定端口
+-v #绑定挂载目录
+</code></pre>
+</li>
+<li>
+<p>docker ps      #查看docker进程</p>
+</li>
+<li>
+<p>docker images          #查看镜像</p>
+</li>
+<li>
+<p>docker commit -m       #提交镜像文件</p>
+</li>
+<li>
+<p>docker save             #保存镜像文件</p>
+</li>
+<li>
+<p>docker pull               #获取镜像</p>
+</li>
+<li>
+<p>docker run               将镜像加载到容器</p>
+</li>
+<li>
+<p>docker up                 将镜像更新启动到容器</p>
+</li>
+<li>
+<p>docker start             开启容器</p>
+</li>
+</ul>
+<h3 id="docker-compose">docker-compose</h3>
+<ol>
+<li>
+<p>创建docker-compose目录</p>
+<pre><code>mkdir docker-compose
+</code></pre>
+</li>
+<li>
+<p>安装docker-compose</p>
+<pre><code>cd docker-compose
+
+vim docker-compose.yml
+upstream
+
+</code></pre>
+</li>
+<li>
+<p>利用dockerFile定义运行环境镜像</p>
+</li>
+<li>
+<p>使用docker-compose.yml定义组成应用的各服务</p>
+</li>
+<li>
+<p>运行docker-compose up</p>
+</li>
+</ol>
+<h3 id="提交个人配置镜像">提交个人配置镜像</h3>
+<h3 id="dockerfile">DockerFile</h3>
+<h3 id="搭建私有docker仓库">搭建私有docker仓库</h3>
+<h3 id="laravel-环境搭建">laravel 环境搭建</h3>
+<h3 id="laradock-搭建多版本php">laradock 搭建多版本php</h3>
+<ol>
+<li>
+<p><strong>.env 文件修改</strong></p>
+<pre><code>DB_HOST=mysql
+REDIS_HOST=redis
+QUEUE_HOST=beanstalkd
+PHP56=5.6          #添加php5.6常量
+</code></pre>
+</li>
+<li>
+<p><strong>打开docker-compose.yml文件(主要修改两处)</strong></p>
+<ul>
+<li>
+<p>新增 <code>PHP-FPM-56</code> 配置项</p>
+</li>
+<li>
+<p>LARADOCK_PHP_VERSION=${PHP56}</p>
+</li>
+<li>
+<p>ports:<br>
+- &quot;19003:19003&quot;</p>
+</li>
+</ul>
+<pre><code>### PHP-FPM-56 ##############################################
+    php-fpm-56:
+      build:
+        context: ./php-fpm-56
+        args:
+          - CHANGE_SOURCE=${CHANGE_SOURCE}
+          - BASE_IMAGE_TAG_PREFIX=${PHP_FPM_BASE_IMAGE_TAG_PREFIX}
+          - LARADOCK_PHP_VERSION=${PHP56}
+          - LARADOCK_PHALCON_VERSION=${PHALCON_VERSION}
+          - INSTALL_BZ2=${PHP_FPM_INSTALL_BZ2}
+          - INSTALL_ENCHANT=${PHP_FPM_INSTALL_ENCHANT}
+          - INSTALL_GMP=${PHP_FPM_INSTALL_GMP}
+          - INSTALL_GNUPG=${PHP_FPM_INSTALL_GNUPG}
+          - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+          - INSTALL_PCOV=${PHP_FPM_INSTALL_PCOV}
+          - INSTALL_PHPDBG=${PHP_FPM_INSTALL_PHPDBG}
+          - INSTALL_BLACKFIRE=${INSTALL_BLACKFIRE}
+          - INSTALL_SSH2=${PHP_FPM_INSTALL_SSH2}
+          - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
+          - INSTALL_XSL=${PHP_FPM_INSTALL_XSL}
+          - INSTALL_SMB=${PHP_FPM_INSTALL_SMB}
+          - INSTALL_IMAP=${PHP_FPM_INSTALL_IMAP}
+          - INSTALL_MONGO=${PHP_FPM_INSTALL_MONGO}
+          - INSTALL_AMQP=${PHP_FPM_INSTALL_AMQP}
+          - INSTALL_CASSANDRA=${PHP_FPM_INSTALL_CASSANDRA}
+          - INSTALL_GEARMAN=${PHP_FPM_INSTALL_GEARMAN}
+          - INSTALL_MSSQL=${PHP_FPM_INSTALL_MSSQL}
+          - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+          - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
+          - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
+          - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
+          - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
+          - INSTALL_AEROSPIKE=${PHP_FPM_INSTALL_AEROSPIKE}
+          - INSTALL_OCI8=${PHP_FPM_INSTALL_OCI8}
+          - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
+          - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+          - INSTALL_PG_CLIENT=${PHP_FPM_INSTALL_PG_CLIENT}
+          - INSTALL_POSTGIS=${PHP_FPM_INSTALL_POSTGIS}
+          - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
+          - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+          - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
+          - INSTALL_PHALCON=${PHP_FPM_INSTALL_PHALCON}
+          - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
+          - INSTALL_TAINT=${PHP_FPM_INSTALL_TAINT}
+          - INSTALL_IMAGE_OPTIMIZERS=${PHP_FPM_INSTALL_IMAGE_OPTIMIZERS}
+          - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
+          - INSTALL_CALENDAR=${PHP_FPM_INSTALL_CALENDAR}
+          - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
+          - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
+          - INSTALL_APCU=${PHP_FPM_INSTALL_APCU}
+          - INSTALL_CACHETOOL=${PHP_FPM_INSTALL_CACHETOOL}
+          - INSTALL_YAML=${PHP_FPM_INSTALL_YAML}
+          - INSTALL_RDKAFKA=${PHP_FPM_INSTALL_RDKAFKA}
+          - INSTALL_GETTEXT=${PHP_FPM_INSTALL_GETTEXT}
+          - INSTALL_ADDITIONAL_LOCALES=${PHP_FPM_INSTALL_ADDITIONAL_LOCALES}
+          - INSTALL_MYSQL_CLIENT=${PHP_FPM_INSTALL_MYSQL_CLIENT}
+          - INSTALL_PING=${PHP_FPM_INSTALL_PING}
+          - INSTALL_SSHPASS=${PHP_FPM_INSTALL_SSHPASS}
+          - INSTALL_MAILPARSE=${PHP_FPM_INSTALL_MAILPARSE}
+          - INSTALL_PCNTL=${PHP_FPM_INSTALL_PCNTL}
+          - ADDITIONAL_LOCALES=${PHP_FPM_ADDITIONAL_LOCALES}
+          - INSTALL_FFMPEG=${PHP_FPM_FFMPEG}
+          - INSTALL_AUDIOWAVEFORM=${PHP_FPM_AUDIOWAVEFORM}
+          - INSTALL_WKHTMLTOPDF=${PHP_FPM_INSTALL_WKHTMLTOPDF}
+          - INSTALL_XHPROF=${PHP_FPM_INSTALL_XHPROF}
+          - INSTALL_XMLRPC=${PHP_FPM_INSTALL_XMLRPC}
+          - INSTALL_PHPDECIMAL=${PHP_FPM_INSTALL_PHPDECIMAL}
+          - INSTALL_ZOOKEEPER=${PHP_FPM_INSTALL_ZOOKEEPER}
+          - INSTALL_SSDB=${PHP_FPM_INSTALL_SSDB}
+          - DOWNGRADE_OPENSSL_TLS_AND_SECLEVEL=${PHP_DOWNGRADE_OPENSSL_TLS_AND_SECLEVEL}
+          - PUID=${PHP_FPM_PUID}
+          - PGID=${PHP_FPM_PGID}
+          - IMAGEMAGICK_VERSION=${PHP_FPM_IMAGEMAGICK_VERSION}
+          - LOCALE=${PHP_FPM_DEFAULT_LOCALE}
+          - PHP_FPM_NEW_RELIC=${PHP_FPM_NEW_RELIC}
+          - PHP_FPM_NEW_RELIC_KEY=${PHP_FPM_NEW_RELIC_KEY}
+          - PHP_FPM_NEW_RELIC_APP_NAME=${PHP_FPM_NEW_RELIC_APP_NAME}
+          - INSTALL_DOCKER_CLIENT=${PHP_FPM_INSTALL_DOCKER_CLIENT}
+          - http_proxy
+          - https_proxy
+          - no_proxy
+      volumes:
+        - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+        - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+        - docker-in-docker:/certs/client
+      ports:
+        - &quot;19003:19003&quot;
+      expose:
+        - &quot;9000&quot;
+      extra_hosts:
+        - &quot;dockerhost:${DOCKER_HOST_IP}&quot;
+      environment:
+        - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+        - DOCKER_HOST=tcp://docker-in-docker:2376
+        - DOCKER_TLS_VERIFY=1
+        - DOCKER_TLS_CERTDIR=/certs
+        - DOCKER_CERT_PATH=/certs/client
+        - FAKETIME=${PHP_FPM_FAKETIME}
+      depends_on:
+        - workspace
+      networks:
+        - backend
+      links:
+        - docker-in-docker
+</code></pre>
+</li>
+<li>
+<p><strong>打开</strong> <code>/var/www/laradock/nginx/sites/</code> <strong>目录项目文件配置</strong></p>
+<ul>
+<li>注意端口号</li>
+<li>fastcgi_pass 修改为php-fpm-56:9000</li>
+</ul>
+<pre><code>location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-56:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+</code></pre>
+</li>
+<li>
+<p><strong>注意事项, 启动失败可能是端口冲突, 我们需要查看进程是否正常</strong></p>
+</li>
+</ol>
+<h3 id="laradock-配置nginx端口中的映射">laradock 配置nginx端口中的映射</h3>
+<ul>
+<li>
+<p>正向代理</p>
+<pre><code>- 使单个域名对应的端口号对应单个项目
+
+- vim /var/www/laradock/nginx/dockerFile
+  修改 EXPOSE 80 81 443 8888
+
+- vim /var/www/laradock/nginx/sites/laravel.conf #配置端口映射
+
+server {
+
+    listen 8888;
+    listen [::]:8888;
+
+    # For https
+    # listen 443 ssl;
+    # listen [::]:443 ssl ipv6only=on;
+    # ssl_certificate /etc/nginx/ssl/default.crt;
+    # ssl_certificate_key /etc/nginx/ssl/default.key;
+
+    server_name myproject.test;
+    root /var/www/laraFile/public;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/laravel_error.log;
+    access_log /var/log/nginx/laravel_access.log;
+}
+
+- /var/www/laradock/docker-compose.yml #添加端口映射
+
+### NGINX Server #########################################
+    nginx:
+      build:
+        context: ./nginx
+        args:
+          - CHANGE_SOURCE=${CHANGE_SOURCE}
+          - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
+          - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+          - http_proxy
+          - https_proxy
+          - no_proxy
+      volumes:
+        - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+        - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+        - ${NGINX_SSL_PATH}:/etc/nginx/ssl
+      ports:
+        - &quot;${NGINX_HOST_HTTP_PORT}:80&quot;
+        - &quot;${NGINX_HOST_HTTPS_PORT}:443&quot;
+        - &quot;${VARNISH_BACKEND_PORT}:81&quot;
+        - &quot;${MY_PROJECT_PORT}:8888&quot;
+      depends_on:
+        - php-fpm
+      networks:
+        - frontend
+        - backend
+
+- vim /var/www/laradock/.env         #配置.env文件
+
+### Paths #################################################
+
+DB_HOST=mysql
+REDIS_HOST=redis
+QUEUE_HOST=beanstalkd
+PHP56=5.6
+MY_PROJECT_PORT=8888
+</code></pre>
+</li>
+<li>
+<p>反向代理</p>
+<ul>
+<li>添加代理cluster</li>
+<li>proxy_pass http://cluster;</li>
+</ul>
+<pre><code>upstream cluster {
+     server 192.168.20.128;
+}
+
+server {
+
+    listen 8888;
+    listen [::]:8888;
+
+    # For https
+    # listen 443 ssl;
+    # listen [::]:443 ssl ipv6only=on;
+    # ssl_certificate /etc/nginx/ssl/default.crt;
+    # ssl_certificate_key /etc/nginx/ssl/default.key;
+
+    server_name myproject.test;
+    root /var/www/laraFile/public;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+         proxy_pass http://cluster;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/laravel_error.log;
+    access_log /var/log/nginx/laravel_access.log;
+}
+</code></pre>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[php知识点]]></title>
+        <id>https://wudengli.github.io/post/php-zhi-shi-dian/</id>
+        <link href="https://wudengli.github.io/post/php-zhi-shi-dian/">
+        </link>
+        <updated>2021-09-13T13:22:44.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="模拟面试">模拟面试</h1>
+<h3 id="php">Php</h3>
+<ul>
+<li>
+<p>php数组</p>
+<pre><code>in_array
+is_array
+array_merge
+array_push          从尾部插入
+array_pop           从尾部移除
+array_shift         从头部移除
+array_unshift       从头部插入
+array_map
+array_keys
+array_key_exists
+array_key_first
+array_key_last
+array_values
+array_column
+array_diff          获取两个数组的差集
+array_intersect     获取两个数组的交集
+array_chunk         将数组分块
+array_reduce
+count
+foreach
+explode
+join
+sort
+</code></pre>
+</li>
+<li>
+<p>oop面向对象</p>
+<pre><code>1.封装:将对象信息通过访问权限修饰符隐藏,不允许外部直接访问.
+2.继承:子类继承父类的方法与属性.
+3.多态:方法重写和重载
+</code></pre>
+</li>
+<li>
+<p>php 超全局变量</p>
+<pre><code>$GLOBAL
+$_GET
+$_POST
+$_FILES
+$_COOKIE
+$_SESSION
+$_SERVER
+$_REQUEST
+$_ENV
+</code></pre>
+</li>
+<li>
+<p>魔术方法</p>
+<pre><code>__construct
+__destruct
+__call
+__callStatic
+__get
+__set
+__isset
+__unset
+__sleep
+__toString
+__clone
+__wakeup
+</code></pre>
+</li>
+<li>
+<p>魔术常量</p>
+<pre><code>__FILE__
+__LINE__
+__DIR__
+__CLASS__
+__METHOD__
+__FUNCTION__
+</code></pre>
+</li>
+<li>
+<p>数据结构,基础算法,设计模式</p>
+<ul>
+<li>
+<p>数据结构</p>
+<ul>
+<li>
+<p>数组</p>
+</li>
+<li>
+<p>链表</p>
+</li>
+<li>
+<p>栈</p>
+<p>array_unshift()从头部入队</p>
+<p>array_shift()从头部移除</p>
+<p>array_pop()出队</p>
+</li>
+<li>
+<p>队列</p>
+<p>array_push()从尾部入队</p>
+<p>array_pop()出队</p>
+</li>
+<li>
+<p>树</p>
+<ul>
+<li>二叉树</li>
+<li>b+树</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>基础算法</p>
+<ul>
+<li>
+<p>二分查找</p>
+<pre><code>function search(&amp;$arr,$number,$left,$right)
+{
+    /**
+     * 先计算中位数
+     * 随后将数组中的值与中位数进行比较
+     * 若在中位数的右侧,则舍去左边部分 $left + 1
+     * 若在中位数的左侧,则舍去右边部分 $right -1
+     * 若都不在则返回中位数
+     */
+    $mid = intval($left + $right)/2
+    
+    if($left &gt; $right)
+    {
+       return -1;
+    }
+    
+    if($number &gt; $arr[$mid])
+    {
+        search($arr,$number,$mid+1,$right);
+    } 
+    else if($number &lt; $arr[$mid])
+    {
+        search($arr,$number,$left,$mid -1);
+    }
+    else
+    {
+        return $mid;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>插值查找</p>
+<pre><code>function insertSort($arr) {
+    $len = count($arr);
+    for($i = 1 ;$i &lt; $len; $i++)
+    {
+         $key = $arr[$i];
+         $pos = $i
+         
+         while($pos &gt; 0 &amp;&amp; $arr[$pos -1] &gt; $key)
+         {
+              $arr[$pos] = $arr[$pos - 1];
+              $pos = $pos-1
+         }
+         $arr[$pos] = $key;
+    }
+    return $arr;
+}
+</code></pre>
+</li>
+<li>
+<p>冒泡排序</p>
+<pre><code>function bubbleSort($arr)
+{
+    $len = count($arr);
+    if($len == 1) return $arr;
+    for($i = 0;$i &lt; $len;$i++){
+       $isOver = false
+       for($j = 0; $j &lt; $len - $i -1;$j++){
+            if($arr[$j] &gt; $arr[$j+1]){
+                $temp = $arr[$j];
+                $arr[$j] = $arr[$j+1];
+                $arr[$j+1] = $temp
+                $isOver = true;
+            }
+       }
+       if(!$isOver){
+           break;
+       }
+    }
+    return $arr;
+}
+</code></pre>
+</li>
+<li>
+<p>快速排序</p>
+<pre><code>function quickSort($arr)
+{
+     $len = count($arr);
+     $mid = $arr[0];
+     $left = [];
+     $right = [];
+     for($i= 1;$i&lt;$len;$i++){
+          if($arr[$i]&gt;$mid){
+            $right[] = $arr[$i];
+          }else{
+            $left[] = $arr[$i];
+          }
+     }
+     $left = quickSort($left);
+     $right = quickSort($right);
+     return array_merge($left,[$mid],$right);
+}
+</code></pre>
+</li>
+<li>
+<p>选择排序</p>
+<pre><code>function selectSort($arr)
+{
+    $len = count($arr);
+    for($i = 0;$i&lt;$len-1;$i++){
+       $min = $i;
+       for($j = $i + 1;$i&lt;$len;$j++){
+           if($arr[$i] &gt; $arr[$j]){
+              $min = $j
+           }
+       }
+       if($i != $min){
+          $temp = $arr[$i];
+          $arr[$i] = $arr[$min];
+          $arr[$min] = $temp;
+       }
+    }
+    return $arr;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>设计模式</p>
+<ul>
+<li>
+<p>单例模式</p>
+<pre><code>class single
+{
+   private static $instance;
+   
+   private function __construct()
+   {
+   
+   }
+   
+   public static function getInstance(){
+       if(!(self::$instance instanceof self)){
+            self::$instance = new self;
+       }
+       return $self::$instance;
+   }
+   
+   private function __clone()
+   {
+   
+   }
+}
+</code></pre>
+</li>
+<li>
+<p>工厂模式</p>
+<pre><code>class Factory
+{
+      private static $nameList = [
+           'a' =&gt; APP\Lib\A,
+           'b' =&gt; APP\Lib\B,
+      ];
+
+      public static function GetObject($className){
+          $obj = new $nameList[self::className]();
+          return $obj;
+      }
+}
+</code></pre>
+</li>
+<li>
+<p>策略模式</p>
+<pre><code>interface Base
+{
+    public function run();
+}
+
+class A ipmlements Base
+{
+    public function run(){
+       reuturn 'aaaa';
+    }
+}
+
+class B ipmlements Base
+{
+    public function run(){
+       reuturn 'bbbb';
+    }
+}
+
+class C ipmlements Base
+{
+    public function run(){
+       reuturn 'cccc';
+    }
+}
+
+class Ci {
+    public $sub;
+
+    public function __construct(Base $base)
+    {
+          $this-&gt;sub = $base;
+    }
+    
+    public function test()
+    {
+         $this-&gt;sub-&gt;run();
+    }
+}
+
+$test = new Ci(new A)
+$test-&gt;test();
+</code></pre>
+</li>
+<li>
+<p>门脸模式</p>
+<pre><code>class SubSysOne
+{
+    function methodone()
+    {
+        return 'rethod one';
+    }
+}
+
+class SubSysTwo
+{
+    function methodtwo()
+    {
+        return 'rethod two';
+    }
+}
+
+class SubSysTree
+{
+    function methodthree()
+    {
+        return 'rethod three';
+    }
+}
+
+class Facade {
+   private $subSystemOne = null;
+   private $subSystemTwo = null;
+   private $subSystemThree = null;
+   
+   public function __contruct()
+   {
+       $this-&gt;subSystemOne = new SubSysOne;
+       $this-&gt;subSystemTwo = new SubSysTwo;
+       $this-&gt;subSystemThree = new SubSysThree;
+   }
+
+   public function methodA()
+   {
+        $this-&gt;subSystemOne-&gt;methodone();
+   }
+   
+   public function methodB()
+   {
+        $this-&gt;subSystemOne-&gt;methodtwo();
+   }
+   
+   public function methodC()
+   {
+        $this-&gt;subSystemOne-&gt;methodthree();
+   }
+}
+</code></pre>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>网络协议(TCP/IP, HTTP)</p>
+<pre><code>-- 三次握手,四次回收
+--网络七层
+  -物理层
+  -数据链路层
+  -网络层
+  -传输层
+  -会话层
+  -表示层
+  -应用层
+  
+-IP协议属于网络层
+-TCP协议属于传输层
+-RPC属于会话层
+
+一、什么是TCP连接的三次握手
+第一次握手：客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认;
+第二次握手：服务器收到syn包，必须确认客户的SYN(ack=j+1)，同时自己也发送一个SYN包(syn=k)，即SYN+ACK包，此时服务器进入SYN_RECV状态;
+第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。
+握手过程中传送的包里不包含数据，三次握手完毕后，客户端与服务器才正式开始传送数据。
+理想状态下，TCP连接一旦建立，在通信双方中的任何一方主动关闭连接之前，TCP 连接都将被一直保持下去。
+断开连接时服务器和客户端均可以主动发起断开TCP连接的请求，断开过程需要经过“四次握手”(过程就不细写了，就是服务器和客户端交互，最终确定断开)
+</code></pre>
+</li>
+<li>
+<p>swoft</p>
+<pre><code>
+</code></pre>
+</li>
+<li>
+<p>Restful API</p>
+<pre><code>
+</code></pre>
+</li>
+<li>
+<p>Nginx</p>
+<pre><code>nginx 是一个高性能的HTTP和反向代理服务器
+
+使用epoll 的IO模型
+
+工作进程一般是cpu核心数的两倍
+
+开启高效传输模式 sendfile on
+
+连接超时时间
+
+fastcgi 调优
+ -应答时间调整
+ -接收超时时间调整
+
+proxy_cache / fastcgi_cache
+
+若其他网站引用我们网站的静态资源，我们可以在nginx 上添加防盗链/*-
+</code></pre>
+</li>
+<li>
+<p>cgi与fastcgi与fpm等</p>
+<pre><code>cgi 是通用网关接口,用于接收客户端的所有请求,转化为服务器能运行的代码再返回给客户端,在处理完进程后会kill进程
+
+fast-cgi是cgi 的升级版,常驻进程,
+
+php-cgi是fast-cgi 的实现,提供了进程管理功能,一个master进程,多个work进程,每个work进程都配备了一个php解释器.
+
+
+--运行流程
+www.example.com
+        |
+        |
+      Nginx
+        |
+        |
+路由到www.example.com/index.php
+        |
+        |
+加载nginx的fast-cgi模块
+        |
+        |
+fast-cgi监听127.0.0.1:9000地址
+        |
+        |
+www.example.com/index.php请求到达127.0.0.1:9000
+        |
+        |
+php-fpm 监听127.0.0.1:9000
+        |
+        |
+php-fpm 接收到请求，启用worker进程处理请求
+        |
+        |
+php-fpm 处理完请求，返回给nginx
+        |
+        |
+nginx将结果通过http返回给浏览器
+        
+
+</code></pre>
+</li>
+<li>
+<p>rpc</p>
+<pre><code>基于会话层的传输协议
+</code></pre>
+</li>
+<li>
+<p>php 的反射机制</p>
+<pre><code>
+</code></pre>
+</li>
+<li>
+<p>递归</p>
+</li>
+<li>
+<p>php四种运行模式</p>
+<pre><code>-CGI
+ 通用网关接口,有多少个连接就有多少个cgi子进程,效率低
+-fast-cgi
+ 
+-cli
+-DLL模块
+</code></pre>
+</li>
+<li>
+<p>上传文件</p>
+<pre><code class="language-php">&lt;?php
+$uploaddir = '/var/www/uploads/';
+$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+
+echo '&lt;pre&gt;';
+if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
+    echo &quot;File is valid, and was successfully uploaded.\n&quot;;
+} else {
+    echo &quot;Possible file upload attack!\n&quot;;
+}
+
+echo 'Here is some more debugging info:';
+print_r($_FILES);
+
+print &quot;&lt;/pre&gt;&quot;;
+
+?&gt;
+</code></pre>
+</li>
+<li>
+<p>DDD领域设计</p>
+<pre><code>接入层
+ -内部rpc服务
+ -对外api服务
+业务层
+ -业务层insterface调用,模块独立化
+服务层
+ -controller代码处理逻辑
+基础设施层
+ -系统局部与全局基础设施搭建
+</code></pre>
+</li>
+</ul>
+<h3 id="mysql">Mysql</h3>
+<ul>
+<li>索引优化</li>
+<li>sql注入</li>
+<li>查询优化
+<ul>
+<li>explain</li>
+</ul>
+</li>
+<li>存储优化</li>
+<li>事务等待</li>
+<li>分库分表</li>
+<li>读写分离</li>
+</ul>
+<h3 id="redis">Redis</h3>
+<ul>
+<li>业务场景
+<ul>
+<li>消息队列</li>
+<li>缓存</li>
+</ul>
+</li>
+<li>解决秒杀</li>
+<li>数据结构
+<ul>
+<li>字符串</li>
+<li>列表</li>
+<li>哈希</li>
+<li>有序集合</li>
+<li>无序集合</li>
+</ul>
+</li>
+</ul>
+<h3 id="docker">Docker</h3>
+<ul>
+<li>
+<p>基本指令</p>
+<pre><code>
+</code></pre>
+</li>
+<li>
+<p>什么是docker</p>
+</li>
+<li>
+<p>docker 与虚拟机有什么不同</p>
+</li>
+<li>
+<p>什么是docker镜像</p>
+</li>
+<li>
+<p>什么是docker容器</p>
+</li>
+<li>
+<p>docker有哪几种状态</p>
+</li>
+</ul>
+<h3 id="laravel">Laravel</h3>
+<ul>
+<li>中间件的实现原理</li>
+<li>优缺点以及与其他框架比对</li>
+<li>容器 循环依赖</li>
+<li>服务优化</li>
+<li>sso单点登陆(jwt)</li>
+<li>服务提供者</li>
+<li>门脸</li>
+<li>领域设计</li>
+<li>Elastic search</li>
+</ul>
+<h3 id="http与nginx">http与nginx</h3>
+<ul>
+<li>http与https</li>
+<li>IP/TCP协议</li>
+<li>nginx基本配置及优化</li>
+</ul>
+<h3 id="kafka与rabbitmq">kafka与Rabbit<em>MQ</em></h3>
+<ul>
+<li>消息队列搭建</li>
+</ul>
+<h3 id="linux-与-shell">Linux 与 Shell</h3>
+<ul>
+<li>常用指令
+<ul>
+<li>查看进程  ps -ef | grep deadloop.php</li>
+<li>查看网关  route -n</li>
+<li>终止进程  pkill -9 pid</li>
+<li>关机重启  reboot(重启)   halt(立即关机)</li>
+<li>查找文件  find [范围] [-条件] [文件名]</li>
+<li>创建目录 mkmir [文件夹名称]</li>
+<li>创建文件 touch [文件名]</li>
+<li>删除文件夹及文件 rm -rf [dir1]</li>
+<li>压缩文件 tar -zcvf [文件名] [压缩路径]</li>
+<li>解压文件 tar -zxvf [文件名]</li>
+<li>移动文件 mv [文件名]</li>
+<li>复制文件 cp [原文件名] [新文件名加路径]</li>
+<li>创建用户 useradd [用户名]          passwd [用户名]</li>
+<li>切换登陆用户 su 用户名</li>
+<li>查看目录 ls</li>
+<li>进入目录 cd [文件名]</li>
+<li>删除文件 rm -f [文件名]</li>
+<li>删除目录 rm -r [文件夹]</li>
+<li>定时任务 crontab</li>
+<li>添加文件权限</li>
+<li>ping</li>
+<li>ifconfig</li>
+<li>wget</li>
+<li>yum</li>
+</ul>
+</li>
+</ul>
+<h3 id="vue">Vue</h3>
+<h3 id="golang">Golang</h3>
+<ul>
+<li>基本语法</li>
+</ul>
+<p>PHP 相关</p>
+<ul>
+<li>平常都使用的什么框架？Laravel 和 ThinkPHP 框架的区别？</li>
+</ul>
+<pre><code>共同点：都支持composer
+
+不同点：1.laravel拥有中间件，tp拥有初始化函数_interlize
+       2.laravel提交表单有csrf验证, tp需要手动完成防跨站请求的代码
+       3.渲染方式不同,laravel中是return view(),tp中是$this-&gt;display();
+       4.laravel内置了hash加密,tp则是md5()加密
+       5.laravel可以使用php artisan migrate命令建表.laravel有专用的tinker直接与应用进行交互,建立模型建表都可以用artisan
+       6.laravel拥有blade模板
+       7.laravel必须定义路由,tp的请求路径则是请求类与请求方法拼接
+       
+ tp是国人开发,MVC风格也比较适合国人思想,
+</code></pre>
+<ul>
+<li>laravel效率怎么样?有没有优化过laravel框架?</li>
+</ul>
+<pre><code>laravel 由于每次请求都要加载一系列的服务及配置,所以性能方面会低很多,但是通过一些优化,性能会提升一下.
+1.缓存路由 php artisan route:cache
+2.优化composer 自动加载
+3.缓存配置文件 php artisan config:cache
+4.关闭debug
+5.删除缓存文件php artisan optimize
+</code></pre>
+<ul>
+<li>Laravel 常用到的功能有哪些？Laravel 依赖注入实现的原理是怎么样的？</li>
+</ul>
+<pre><code>dd()
+artisan
+migrate 建表
+定时任务
+集合
+缓存
+路由
+模型orm
+
+一个类需要依赖另外一个类来实现功能, 利用了php的反射机制来构造
+</code></pre>
+<ul>
+<li>Swoole 你用到了哪些功能？对协程这一块了解吗？</li>
+</ul>
+<p>能说说 PHP 的生命周期吗？传统的 php-fpm 模式和 swoole 有什么区别？</p>
+<p>在项目中都是怎么用 hyperf 的？了解 hyperf 中的依赖注入实现原理吗？使用 hyperf 中的类是怎么实现的，是通过注解引入吗？</p>
+<p>说说你在项目中使用到的 PHP 函数，任意说几个以及它的功能？</p>
+<pre><code>--string
+
+--array
+
+--sort
+
+--file
+</code></pre>
+<ul>
+<li>PHP 的垃圾回收机制是怎么样的？</li>
+</ul>
+<pre><code>php中的变量存储在变量容器zval中，zval中除了存储变量类型和值外，还有is_ref和refcount字段。refcount表示指向变量的元素个数，is_ref表示变量是否有别名。如果refcount为0时，就回收该变量容器。如果一个zval的refcount减1之后大于0，它就会进入垃圾缓冲区。当缓冲区达到最大值后，回收算法会循环遍历zval，判断其是否为垃圾，并进行释放处理。/*
+</code></pre>
+<ul>
+<li>PHP5 的版本和 PHP7 之间有哪些区别？对 PHP8 了解吗，任意说说其中的新特性？</li>
+</ul>
+<pre><code>1.性能提升, php7比php5性能提升了两倍
+2.php7新增了函数返回类型声明及标量类型申明
+3.php7新增了匿名类
+4.php7中if条件中的数据key若不存在会直接报错,而php5则直接返回false
+5.php7中新增了比较运算符
+</code></pre>
+<p>说说 php-fpm 与 NGINX 工作原理是怎么样的？</p>
+<p>cgi 与 fast_cgi 关系是怎么样的？</p>
+<pre><code>
+</code></pre>
+<p>isset、empty 和 is_null 区别是怎么样的？如果传递一个 null，该三个函数分别返回什么？</p>
+<pre><code>false,false,true
+isset 表示变量是否设置, 当传递 false null 0 空串 empty会返回true反之为false ,is_null 用于判断该参数是否为null 类型
+</code></pre>
+<p>require_once 与 include_once，require 与 include 的区别？为什么一个是警告一个是致命错误？</p>
+<pre><code>require 在执行过程中若出现异常则会抛出一个致命错误,中断后续的程序 , 而include在执行时出现异常则会报一个wating警告,继续执行后面的代码.
+
+require_once 与 include_once 表示只执行一次, 不重复引入
+</code></pre>
+<p>php-fpm 的工作模式？进程数量配置依据是什么？</p>
+<p>说说 PHP 数组中的数据结构是怎么样的？</p>
+<p><strong>Redis 相关</strong></p>
+<ul>
+<li>
+<p>平常使用 Redis 都是在哪些场景？</p>
+<ul>
+<li>5大数据类型
+<ul>
+<li>字符串</li>
+<li>列表</li>
+<li>哈希</li>
+<li>有序集合</li>
+<li>无序集合</li>
+</ul>
+</li>
+<li>用于缓存
+<ul>
+<li>加载权限列表</li>
+</ul>
+</li>
+<li>为的是服务无状态
+<ul>
+<li>因为http 是无状态协议</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Redis 是单线程还是多线程?</p>
+<ul>
+<li>无论什么版本，工作线程就是一个</li>
+<li>6.x版本出现了IO多线程</li>
+</ul>
+</li>
+<li>
+<p>遇到过Redis缓存穿透吗？</p>
+<ul>
+<li>穿透：redis 没有数据，直接穿透到mysql</li>
+<li>避免无效请求</li>
+<li>布隆过滤器：过滤掉缓存中与数据库中都不存在的数据</li>
+</ul>
+</li>
+<li>
+<p>遇到过Redis缓存击穿吗？</p>
+<ul>
+<li>击穿：添加互斥锁, 当串行在redis中为获取到key，那么会直接请求到数据库，这个时候，如果在数据库返回null时，那么后续在redis中没有的key将会进行取锁操作，没有取到所的将sleep，取到锁的将访问数据库。为的就是减少数据库操作。抢上的DB O(1)</li>
+</ul>
+</li>
+<li>
+<p>遇到过Redis 雪崩吗?请简述一下</p>
+<ul>
+<li>雪崩: 将缓存数据过期时间设置为随机, 设置热点数据永不过期.</li>
+</ul>
+</li>
+<li>
+<p>缓存是如何回收的(删除过期key)?</p>
+<ul>
+<li>redis 无用的key,在请求时判断是否i已经过期</li>
+</ul>
+</li>
+<li>
+<p>如何进行缓存预热</p>
+<ul>
+<li>如何先提前部署缓存数据</li>
+<li>规避差集(没有缓存的数据),</li>
+</ul>
+</li>
+<li>
+<p>数据库与缓存不一致?</p>
+<ul>
+<li>我们可以使用分布式事务来解决(不推荐)</li>
+</ul>
+</li>
+<li>
+<p>简述一下主从不一致的问题?</p>
+<ul>
+<li>redis 是缓存, 更倾向于稍微的有时差</li>
+<li>减少DB操作</li>
+</ul>
+</li>
+<li>
+<p>简述下主从不一致的问题?</p>
+<ul>
+<li>redis 是默认弱一致性的</li>
+<li>锁不能用主从</li>
+</ul>
+</li>
+<li>
+<p>Redis 的持久化有哪几种？有什么区别？实现的原理是怎样的？</p>
+<pre><code>1. AOF
+2. RDB
+</code></pre>
+</li>
+</ul>
+<p>Redis 的事务了解吗？事务都有哪些注意的地方？</p>
+<p>Redis 都有哪些数据类型？你是怎么选择数据类型的？底层的数据结构是怎么样的？</p>
+<p>Redis 能够实现命令批处理吗？</p>
+<p>Redis 的哨兵机制了解吗？实现原理是怎么样的？</p>
+<p>Redis 的主从复制实现原理是怎么样的？如何保证数据一致性？数据延迟又该如何处理？</p>
+<p>利用 Redis 如何实现队列功能？</p>
+<p>消息发布与订阅有使用过吗？怎么使用的？中间又遇到过什么问题吗？</p>
+<p>如何解决缓存穿透、击穿和雪崩问题？</p>
+<p>Redis 作为一个内存型数据库，如何更好的解决内存的占用？</p>
+<p>Redis 与 memcached 的区别？什么时候会选择 memcached？</p>
+<pre><code>redis相比与memcached 更适合做存储
+memcached因为数据结构是key-value的形式适合做缓存
+</code></pre>
+<p>MySQL<br>
+列举几个 MySQL 索引失效的情况？该如何优化这些情况？</p>
+<p>MySQL 索引都有哪些？InnoDB 索引是用的什么数据结构，为什么使用这种数据结构？</p>
+<pre><code>全文索引
+ -- 用于文章
+唯一索引
+ -- 主键索引
+ -- 唯一索引
+联合索引
+ -- 当where 条件中为联合查询时,使用联合索引
+普通索引
+ -- 用于提高查询效率
+</code></pre>
+<p>MySQL设计规范? 常见的设计小问题?</p>
+<p>MySQL 主从复制是如何实现的？如果从节点挂了，重新启动从节点，如何保持数据一致性？如何解决数据同步延迟问题？</p>
+<p>说说你优化 SQL 语句的几种思路有哪些？</p>
+<p>说说 MySQL 中的锁有哪些？之间的区别？</p>
+<p>MySQL 中的事务了解吗？说说其 4 大特性？</p>
+<p>事务中隔离性，有几种情况？这几种情况分别会产生什么问题？</p>
+<p>MySQL 中 MVVC 实现的原理是怎么样的？</p>
+<p>mongodb 与 mysql 的关系，为什么日志系统会选择 mongodb？</p>
+<p>RabbitMQ<br>
+主要使用的场景在哪些地方？</p>
+<p>工作模式都有哪些？之间的区别是怎么样的？</p>
+<p>如何保证消息的可靠性？</p>
+<p>日志存储在 RabbitMQ，如果同步到 MongoDB 里面，如何解决新旧数据问题？(这里提到了一个公司实际业务问题，公司日志会存储到 MongoDB，如何保证每次存的都是最新的消息)</p>
+<p>你知道哪些消息队列？这些消息队列有什么区别？</p>
+<pre><code>Redis(简单的消息队列)
+Kafka()
+RocketMQ
+</code></pre>
+<p>软件设计<br>
+有一个电商营销活动系统，你该如何去设计这个系统，保证系统不会出现问题？</p>
+<p>项目中哪些地方用到了消息队列？是如何设计的？</p>
+<ul>
+<li>电商系统中，如何保证商品库存不会超卖问题？</li>
+<li>如果一页面请求慢，该从哪些方面排查？
+<ul>
+<li>前端</li>
+<li>网络</li>
+<li>服务端代码</li>
+<li>mysql查询速率</li>
+</ul>
+</li>
+</ul>
+<p><strong>1、事务四大特性</strong></p>
+<p>原子性（Atomicity）：事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。</p>
+<p>一致性（Consistency）：事务开始前和结束后，数据库的完整性约束没有被破坏 。</p>
+<p>隔离性（Isolation）：同一时间，只允许一个事务请求同一数据，不同的事务之间彼此没有任何干扰。</p>
+<p>持久性（Durability）：事务完成后，事务对数据库的所有更新将被保存到数据库，不能回滚。</p>
+<p><strong>2、事务的并发问题</strong></p>
+<p>脏读：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据</p>
+<p>不可重复读：（事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果 不一致。）（重点：数据修改）</p>
+<p>幻读：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。（重点：数据新增或删除）</p>
+<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表</p>
+<p><strong>3、MySQL 事务隔离级别</strong></p>
+<p>未提交读（READ UNCOMMITED）（没提交的数据可读，脏读，这些数据称为脏数据）</p>
+<p>已提交读（READ COMMITED）（已提交的数据可读，不可重复读）</p>
+<p>可重复读（RePEATABLE READ）一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的。</p>
+<p>可串行化（SERIALIZABLE）（读操作会隐式获取共享锁，可以保证不同事务间的互斥，锁表，别想搞什么鬼，缺点也很明显，看到锁表你就懂的哈，效率问题）</p>
+<p><strong>面试官问的面试题：</strong></p>
+<p>1.php一些基础的数组使用，<br>
+2.linux操作命令统计pv,uv这些，<br>
+3.git命令的使用，<br>
+4.redis如何实现延迟队列，分布式锁这些，<br>
+5.php的结构，fpm配置这些。<br>
+6.主要问对技术层面的把控度，比如如何设计高并发系统，需要考虑什么问题？可能会现在的问题，如何去预防，有什么方案处理？<br>
+7.职业规划</p>
+<p><strong>nginx:</strong><br>
+epoll模型<br>
+nginx和fpm的交互流程<br>
+有哪些优化项<br>
+负载均衡策略和对比<br>
+限流</p>
+<p><strong>mysql：</strong><br>
+锁机制，索引，事务，隔离级别和对应解决的问题。<br>
+sql查询优化，以及explain计划。<br>
+mysql比较常见的细节问题，比如：innodb的特点，Hash索引和B+树区别，非聚簇索引和回表查询，以及写sql能力的考察。</p>
+<p><strong>算法：</strong><br>
+全排列，各种排序，二分查找。</p>
+<p><strong>操作系统：</strong><br>
+进程状态，IPC，调度算法，线程和协程，死锁。</p>
+<p><strong>计算机网络：</strong><br>
+五层分别哪些。tcp、udp区别。同源测略和跨域。<br>
+一个网页从输入地址回车，到完整展示网页内容这段时间里，做了哪些工作。<br>
+keepalived是什么，有什么作用（tcp）。<br>
+cdn如何防篡改，https如何安全。</p>
+<p><strong>Redis：</strong><br>
+使用场景，淘汰策略，持久化，主从哨兵和底层实现。</p>
+<p><strong>php：</strong><br>
+zval结构，垃圾回收，7新特性，get|post，session，cookie，字符串，数组函数的用法，命名空间，composer<br>
+fpm的优化，三种配置方式，静态方式如何确定最大worker数</p>
+<p><strong>业务相关的问题：</strong><br>
+接口设计，鉴权部分设计，单点，单用户，高并发，防超卖，Saas项目架构设计。</p>
+<p><strong>开放式的问题:</strong><br>
+请简单介绍一下你做的这个项目<br>
+近期遇到比较棘手的问题、有挑战性的问题，你是如何去解决这个问题的。</p>
+<ul>
+<li>你在职期间做的最成功的一个项目是什么?</li>
+</ul>
+<h2 id="面试考点">面试考点</h2>
+<ul>
+<li>Javascript, jQuery以及Ajax</li>
+<li>Linux基础知识</li>
+<li>Mysql 数据库基础</li>
+<li>程序设计</li>
+<li>php框架基础知识</li>
+<li>Mysql 基础知识考点</li>
+<li>Mysql创建高性能的索引考察点</li>
+<li>Mysql的SQL语句编写及优化</li>
+<li>Mysql 的高可扩展和高可用及安全性</li>
+<li>常见数据结构特征</li>
+<li>算法的工作原理</li>
+<li>时间复杂度</li>
+<li>空间复杂度</li>
+<li>其他逻辑算法</li>
+<li>php内置函数实现</li>
+<li>如何理解高并发
+<ul>
+<li>PV</li>
+<li>UV</li>
+<li>QPS</li>
+</ul>
+</li>
+<li>优化时机
+<ul>
+<li>QPS阶段性优化</li>
+</ul>
+</li>
+<li>优化案例
+<ul>
+<li>防盗链</li>
+<li>减少http请求</li>
+<li>浏览器缓存</li>
+<li>cdn加速</li>
+<li>数据库缓存</li>
+<li>Mysql 的读写分离</li>
+<li>分区及分库分表</li>
+<li>LVS负载均衡</li>
+</ul>
+</li>
+</ul>
+<h3 id="真题">真题</h3>
+<ul>
+<li>
+<p>什么是引用变量?在php中,用什么符号来定义引用变量?</p>
+<pre><code>概念: &amp;
+查看zval变量容器 xdebug_debug_zval($a)
+
+is_ref   变量内存空间是否重新赋值
+refcount    运用该空间的变量个数
+</code></pre>
+</li>
+<li>
+<p>说一下session与cookie的区别?</p>
+<pre><code>因为http 是无状态的,前后没有联系,所以我们使用session进行会话控制.
+
+Cookie:
+  设置setcookie($name,$value,$expire,$domain);
+  读取:$_COOKIE
+  
+  存贮不敏感重要信息
+  不会占用服务器资源
+  
+Session:
+  Session是基于cookie,session 是存储在服务器端.
+  session_start();
+  $_SESSION = []
+  session_destroy();销毁
+  
+  
+Cookie中存储了session_id,如果禁用掉的话,session_id无法正常传递.那么就要到url中去拼接或echo 常量SID
+
+若会话多台服务器,那么我们将会把session存储到redis,memcache中
+session_set_save_handler()
+
+</code></pre>
+</li>
+<li>
+<p>你是否使用过版本控制器?</p>
+<pre><code>集中式
+     都放在一台服务器中
+分布式
+</code></pre>
+</li>
+<li>
+<p>Nginx + php-fpm</p>
+<pre><code>cgi: 通用网关接口,是一种通信协议
+fastcgi: 是cgi的升级版,保留进程,处理多个进程
+php-fpm: fastcgi 的进程管理器,一般一个master进程,多个worker进程.master端口主要进行监听端口负责接收来自web的请求,worker进程解析请求.
+</code></pre>
+</li>
+<li>
+<p>php常见配置项</p>
+<pre><code>register_globals      接收来自客户端的变量,默认关闭
+allow_url_fopen      打开远程文件
+allow_url_include    引用外部资源
+date.timezone        设置时区
+display_errors       bug展示
+error_reporting      错误级别
+safe_mode            安全模式
+upload_max_filesize   最大上传文件大小
+max_upload_file      最大上传文件数量
+</code></pre>
+</li>
+<li>
+<p>正则表达式考点</p>
+<pre><code>至少写出一种验证139开头的正则表达式
+preg_match();
+preg_match_all();
+
+正则表达式的作用: 分割,查找,匹配,替换字符串
+分隔符:正斜线(/),hash符号(#)以及取反符号(~)
+通用原子:
+     \d, 数字0-9
+     \D, 除了0-9
+     \w, _
+     \W, 除了_
+     \s, 空白符
+     \S  除了空白符
+元字符: .    除了换行符外的任意符号
+       *    匹配前面的内容出现一次或多次
+       ?    零次或者一次
+       ^    必须以它开头
+       $    必须以他结尾
+       +    出现一次及以上
+       {n}  出现n次
+       {n,} 大于n次
+       {n,m}, 大于n次,小于m次
+       []   集合,匹配括号内的字符集
+       ()   
+       [^]  取反,除了集合内的字符
+       |    或者
+       [-]  范围
+       
+模式修正符: 
+        i  不区分大小写
+        m  
+        e
+        s
+        U
+        x
+        A
+        D
+        u
+          
+匹配中文: '/[x{4e00}-\x{9fa5}]+/u'
+请写出以139开头的11位手机号码的正则表达式:
+.*? 忽略中间元素
+
+</code></pre>
+</li>
+<li>
+<p>文件读取/写入操作</p>
+<pre><code>fopen()函数
+打开模式：
+r  只读方式打开(文件指针指向开头)
+r+ 读写方式打开
+w  只写方式打开(会先清空文件)
+w+ 读写方式打开(若文件不存在会创建文件)
+a  追加的写入方式
+a+ 读写的追加方式(将文件指针指向文件末尾)
+x  以写入的方式打开(将文件指针指向文件开头)
+x+ 
+
+fread()  读取文件
+fwrite() 写入文件
+fclose() 关闭文件
+
+写入函数 file_put_contents()
+读取函数 file_get_contents()
+
+访问远程文件
+开启allow_url_fopen,
+
+名称相关:basename(),dirname()
+目录读取:opendir(),readdir(),closedir()
+删除目录:rmdir()
+目录创建:mkdir()
+文件大小:filesize()
+删除文件:unlink()
+重命名文件或目录:rename()
+文件属性:file_exists()
+</code></pre>
+</li>
+<li>
+<p>面向对象</p>
+<ul>
+<li>权限控制修饰符
+<ul>
+<li>public</li>
+<li>protected</li>
+<li>private</li>
+</ul>
+</li>
+<li>封装继承多态</li>
+</ul>
+</li>
+<li>
+<p>网络协议</p>
+<ul>
+<li>
+<p>HTTP状态码</p>
+<ul>
+<li>20x 响应成功</li>
+<li>30x 重定向</li>
+<li>40x 客户端错误</li>
+<li>50x 服务端错误</li>
+</ul>
+</li>
+<li>
+<p>osi七层模型</p>
+<ul>
+<li>物理层</li>
+<li>数据链路层</li>
+<li>网络层</li>
+<li>传输层</li>
+<li>会话层</li>
+<li>表示层</li>
+<li>应用层</li>
+</ul>
+</li>
+<li>
+<p>http的工作特点及工作原理</p>
+<ul>
+<li>
+<p>http 是无状态协议</p>
+</li>
+<li>
+<p>基于B/S模式</p>
+</li>
+<li>
+<p>通信开销小,简单快速</p>
+</li>
+<li>
+<p>客户端发送给服务器,创建一个tcp连接,指定端口号为80,当服务器监听操到浏览器发送的请求将会进行分析解析然后返回.</p>
+</li>
+<li>
+<p>http协议常见的请求头</p>
+<ul>
+<li>Content-Type</li>
+<li>Accept</li>
+<li>Origin</li>
+<li>Cookie</li>
+<li>Cache-Control</li>
+</ul>
+</li>
+<li>
+<p>http的请求方法</p>
+<ul>
+<li>GET     查找幂等资源</li>
+<li>POST    创建资源</li>
+<li>HEAD</li>
+<li>OPTIONS</li>
+<li>PUT     修改资源</li>
+<li>DELETE    删除资源</li>
+<li>TRACE</li>
+</ul>
+</li>
+<li>
+<p>GET与POST 的区别</p>
+<ul>
+<li>get可以收藏为书签</li>
+<li>get可以在浏览器后退</li>
+<li>get可以被缓存,post</li>
+<li>get会存入历史</li>
+<li>get会有长度限制,post则没有</li>
+<li>post可以发送文件</li>
+<li>post安全性更好</li>
+</ul>
+</li>
+<li>
+<p>常见网络协议及端口</p>
+<ul>
+<li>FTP        21</li>
+<li>SFTP      22</li>
+<li>Telnet   23</li>
+<li>SMTP    24</li>
+<li>HTTP     80</li>
+<li>HTTPS   443</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>php数据类型</p>
+<ul>
+<li>标量
+<ul>
+<li>浮点    二进制运算中</li>
+<li>布尔
+<ul>
+<li>0</li>
+<li>0.0</li>
+<li>' '</li>
+<li>'0'</li>
+<li>false</li>
+<li>array()</li>
+<li>null</li>
+</ul>
+</li>
+<li>整形</li>
+<li>字符串</li>
+</ul>
+</li>
+<li>复合
+<ul>
+<li>数组
+<ul>
+<li>$GLOBALS</li>
+<li>$_GET</li>
+<li>$_POST</li>
+<li>$_REQUEST</li>
+<li>$_SERVER
+<ul>
+<li>$_SERVER['SERVER_ADDR']     请求IP地址</li>
+<li>$_SERVER['SERVER_NAME']    请求服务器名称</li>
+<li>$_SERVER['SERVER_TIME']      请求时间</li>
+<li>$_SERVER['SERVER_QUERY']  请求参数</li>
+<li>$_SERVER['REMOTE_ADDR']  客户端IP</li>
+</ul>
+</li>
+<li>$_FILES</li>
+<li>$_COOKIE</li>
+<li>$_SESSION</li>
+<li>$_ENV</li>
+</ul>
+</li>
+<li>对象</li>
+</ul>
+</li>
+<li>特殊
+<ul>
+<li>null</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>JavaScript 基本语法</p>
+<ul>
+<li>数据类型(JavaScript变量均为对象,当您声明一个变量时,就创建了一个新的对象)
+<ul>
+<li>字符串</li>
+<li>数字</li>
+<li>布尔</li>
+<li>对象</li>
+<li>数组</li>
+<li>Null</li>
+<li>Undefined</li>
+</ul>
+</li>
+<li>创建对象
+<ul>
+<li>new Object()</li>
+<li>使用对象构造器</li>
+<li>var obj = {}</li>
+</ul>
+</li>
+<li>运算符
+<ul>
+<li>使用+拼接</li>
+</ul>
+</li>
+<li>Window对象</li>
+<li>DOM对象
+<ul>
+<li>Document</li>
+<li>Element</li>
+<li>Attr</li>
+<li>Event</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>jQuery 基本语法</p>
+<ul>
+<li>jQuery选择器
+<ul>
+<li>基本选择器</li>
+<li>层次选择器</li>
+<li>过滤选择器</li>
+<li>可见性过滤选择器</li>
+<li>属性过滤选择器</li>
+<li>子元素过滤选择器</li>
+<li>表单对象属性过滤选择器</li>
+</ul>
+</li>
+<li>jQuery事件
+<ul>
+<li>$('button').click(function(){...some code...})</li>
+<li>...</li>
+</ul>
+</li>
+<li>jQuery效果
+<ul>
+<li>$('div').show</li>
+<li>...</li>
+</ul>
+</li>
+<li>jQuery DOM操作
+<ul>
+<li>属性</li>
+<li>值</li>
+<li>节点</li>
+<li>css</li>
+<li>尺寸</li>
+</ul>
+</li>
+<li>jQuery常用Ajax操作
+<ul>
+<li>$.ajax()</li>
+<li>$.get()</li>
+<li>$.post()</li>
+<li>$.getJSON()</li>
+<li>$.getScript()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>代码实例</p>
+<ul>
+<li>
+<pre><code>- document.getElementById('test').className = 'good'
+</code></pre>
+</li>
+<li>
+<pre><code>- $('#test').className = 'good';
+</code></pre>
+</li>
+<li>
+<pre><code>- $(function(){
+    $('#test').click(function(){
+        
+    })
+})
+</code></pre>
+</li>
+<li></li>
+</ul>
+</li>
+<li>
+<p>Mysql</p>
+<ul>
+<li>
+<p>数据类型</p>
+<ul>
+<li>整数类型
+<ul>
+<li>TINYINT</li>
+<li>SMALLINT</li>
+<li>MEDIUMINT</li>
+<li>INT</li>
+<li>BIGINT</li>
+</ul>
+</li>
+<li>实数类型
+<ul>
+<li>FLOAT</li>
+<li>DOUBLE</li>
+<li>DECIMAL(decimal可存储比bigint还大的整数)</li>
+</ul>
+</li>
+<li>字符串类型
+<ul>
+<li>VARCHAR</li>
+<li>CHAR</li>
+<li>TEXT</li>
+<li>BLOB</li>
+</ul>
+</li>
+<li>枚举(避免使用数字作为ENUM的常量)</li>
+<li>时间函数
+<ul>
+<li>TIMESTAMP(尽量使用这个)</li>
+<li>DATETIME</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>常用操作</p>
+<pre><code>mysql -u -p -h -P
+</code></pre>
+</li>
+<li>
+<p>Mysql数据表引擎</p>
+<ul>
+<li>
+<p>InnoDB</p>
+<ul>
+<li>
+<pre><code>- 默认事务型,最重要最广泛的存储引擎,性能优秀的数据存储在共享表空间.
+- 读取数据时会在内存中构建hash索引
+- 插入数据时会自动构建插入缓冲区
+</code></pre>
+</li>
+<li>
+<p>支持热备份</p>
+</li>
+<li>
+<p>支持崩溃后安全修复</p>
+</li>
+<li>
+<p>支持行级锁</p>
+</li>
+<li>
+<p>支持外键</p>
+</li>
+<li>
+<p>事务处理</p>
+</li>
+<li>
+<p>数据存储在共享表空间</p>
+</li>
+</ul>
+</li>
+<li>
+<p>MyISAM</p>
+<ul>
+<li>拥有全文索引,压缩,空间函数</li>
+<li>不支持事务和行级锁,不支持安全恢复</li>
+<li>表锁</li>
+<li>支持全文索引</li>
+<li>数据存储在MYD文件与MYI文件</li>
+</ul>
+</li>
+<li>
+<p>其他表引擎</p>
+<ul>
+<li>CSV</li>
+<li>Memory</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>MySQL锁机制</p>
+<ul>
+<li>
+<p>读锁</p>
+<pre><code>- 
+</code></pre>
+</li>
+<li>
+<p>写锁</p>
+</li>
+<li>
+<p>锁粒度</p>
+<pre><code>表锁,系统性能开销最小,直接锁定整张表
+行锁,
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>MySQL索引</p>
+<ul>
+<li>
+<p>类型</p>
+<pre><code>- 主键索引
+- 普通索引
+- 唯一索引
+- 联合索引
+- 全文索引
+</code></pre>
+</li>
+<li>
+<p>影响</p>
+<pre><code>减少服务器开销
+将随机I/O变顺序I/O
+提高查询速度,降低写入速度
+</code></pre>
+</li>
+<li>
+<p>场景</p>
+<pre><code>- 对于非常小的表,直接全表扫描
+</code></pre>
+</li>
+<li>
+<p>注意</p>
+<ul>
+<li>复核索引遵循前缀原则</li>
+<li>like查询,%不能在前,可以使用全文索引</li>
+<li>column is null 可以使用索引</li>
+<li>如果MySQL估计使用索引比全表扫描更慢,会放弃使用索引</li>
+<li>如果or 前的条件中的列有索引,后面的没有,索引都不会被用到</li>
+<li>列类型是字符串,查询时一定要给值加引号,否则索引失效</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>查询语句</p>
+<ul>
+<li>
+<p>联合查询</p>
+<pre><code>union 会合并重复的列
+union all 会查询出所有的列
+
+select * from a union select * from b
+</code></pre>
+</li>
+<li>
+<p>连表查询</p>
+<ul>
+<li>left join</li>
+<li>inner join</li>
+<li>right join</li>
+</ul>
+</li>
+<li>
+<p>嵌套查询</p>
+<pre><code>select * from where id in (select id from b where ...)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>查询优化</p>
+<ul>
+<li>
+<p>explain</p>
+<ul>
+<li></li>
+</ul>
+</li>
+<li>
+<p>show profiles</p>
+<pre><code>set profiling =1;开启,服务器上执行的所有语句会检测消耗的时间,存到临时表
+show profiles 查询执行sql日志
+show profile for query 临时表ID
+
+</code></pre>
+</li>
+<li>
+<p>show status</p>
+<pre><code>
+</code></pre>
+</li>
+<li>
+<p>show processlist</p>
+<pre><code>查询是否有大量线程处于不正常的状态或特征
+</code></pre>
+</li>
+<li>
+<p>查询不需要的记录,使用limit解决</p>
+</li>
+<li>
+<p>多表关联取出全部列, 少用select *</p>
+</li>
+<li>
+<p>查询相同的数据,可以只用缓存</p>
+</li>
+<li>
+<p>分解关联查询, 将关联语句差分为多条SQL来执行</p>
+</li>
+<li>
+<p>优化limit 分页, 记录上次查询的id添加到where条件中</p>
+</li>
+<li>
+<p>union all 的效率高于union</p>
+</li>
+</ul>
+</li>
+<li>
+<p>分库分表</p>
+<ul>
+<li>当表数据达到百万或千万时需要进行分表</li>
+</ul>
+</li>
+<li>
+<p>算法的概念</p>
+<ul>
+<li>
+<p>时间复杂度</p>
+<pre><code>问题规模n的函数f(n),算法的时间复杂度记为T(n) = O(f(n))
+随着n越大,算法执行的时间的增长率与f(n)的增长率正相关,称作为渐进时间复杂度
+
+时间复杂度为循环递归次数
+
+O(n^2)
+
+O(1)
+
+O(n)
+</code></pre>
+</li>
+<li>
+<p>空间复杂度</p>
+<pre><code>算法需要消耗的内存空间,基座S(n) = O(f(n))
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>常见数据结构</p>
+<ul>
+<li>Array</li>
+<li>LinkedList(链表)</li>
+<li>Stack(栈,先进后出)</li>
+<li>Heap(堆,二叉堆)</li>
+<li>list(线性表)</li>
+<li>queue(队列,先进先出)</li>
+<li>doubly-linked-list(双向链表)</li>
+<li>set(集合)</li>
+<li>map(字典)</li>
+<li>graph(图)</li>
+</ul>
+</li>
+<li>
+<p>真题</p>
+<pre><code>//1,1,2,3,5,8,13,21,34,....
+
+$arr = [1,1]
+
+for($i=2;$i&lt;30;$i++){
+    $arr[$i] = $arr[$i-1] + $arr[$i-2];
+}
+
+var_dump($arr[30]);
+</code></pre>
+<ul>
+<li>
+<p>请写一个函数,实现open_door转换为OpenDoor</p>
+<pre><code>&lt;?php
+
+function strHandle($str){
+   $res = '';
+   $arr = explode('_',$str);
+   foreach($arr as $val){
+     $res .= ucfirst($val)
+   }
+   return $res;
+}
+?&gt;
+</code></pre>
+</li>
+<li>
+<p>字符串反转</p>
+<pre><code>&lt;?php
+
+function str_rev($str)
+{
+   $i = 0;
+   while(true){
+      if(isset($str[$i])){
+          break;
+      }
+      $i++
+   }
+   $res = '';
+   for($j=$i-1;$j&gt;=0;$j--){
+       $res = .= $str[$j];
+   }
+   return $res;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>高并发和大流量解决方案</p>
+<ul>
+<li>
+<p>php如何解决网站大流量与高并发</p>
+<ul>
+<li>高并发架构相关概念</li>
+<li>高并发解决方案案例</li>
+<li>QPS(每秒钟请求或者查询的数量,每秒响应请求数)</li>
+<li>吞吐量:单位时间内处理的请求数量(通常由QPS与并发数决定)</li>
+<li>响应时间:从请求发出到收到响应花费的时间.</li>
+<li>PV(综合浏览量),及页面浏览量</li>
+<li>UV(独立访客):一个用户一定时间内</li>
+<li>日网站带宽 = PV / 统计时间(秒) * 平均页面大小 * 8</li>
+<li>QPS为每秒钟HTTP请求数量</li>
+<li>根据每天的QPS, 与 PV,来进行QPS测试,测试能承受的最大并发</li>
+<li>ab -c 100 -n 5000  并发请求100次,总共请求5000次</li>
+<li>注意: 不要对线上服务做压力测试</li>
+</ul>
+</li>
+<li>
+<p>QPS分析优化</p>
+<ul>
+<li>qps达到50, 一般的服务器可以应付</li>
+<li>qps达到100, 1秒钟完成100次请求,但是我们不能保证数据库查询能完成100次,我们可以做一个数据库缓存, 数据库负载均衡</li>
+<li>qps达到800, cdn加速, nginx负载均衡</li>
+<li>qps达到1000, 让memcache 的请求远大于DB的请求, 静态HTML缓存</li>
+<li>qps达到2000, 做业务分离,分布式存储.</li>
+</ul>
+</li>
+<li>
+<p>流量优化</p>
+<ul>
+<li>防盗链处理: 对于恶意请求, 减少外部使用服务器内部资源;</li>
+<li>前端优化: 减少http请求,将css请求进行合并,添加异步请求.启用浏览器缓存和文件压缩,CDN加速</li>
+<li>服务端优化: 页面静态化, 并发处理, 多进程, 多线程, 队列处理</li>
+<li>数据库优化: 数据库缓存, redis缓存, 分库分表, 分区操作,读写分离,负载均衡</li>
+<li>web服务器优化: 负载均衡, 反向代理</li>
+</ul>
+</li>
+<li>
+<p>防盗链</p>
+<ul>
+<li>在请求头referer 中加一个域名</li>
+<li>在请求头中设立一个签名</li>
+<li>Nginx 模块中ngx_http_referer_module 用来阻挡非法域名请求</li>
+<li>当访问gif,jpg,png,flv等静态资源我们来验证请求源是否合法</li>
+</ul>
+</li>
+<li>
+<p>HTTP连接产生的开销</p>
+<pre><code>域名解析--TCP连接--发送请求--等待--下载资源--解析时间
+DNS 缓存
+Keep-Alive
+</code></pre>
+</li>
+<li>
+<p>图片地图</p>
+<pre><code>使图标的图片都在一张图片上
+</code></pre>
+</li>
+<li>
+<p>合并js,css</p>
+</li>
+<li>
+<p>静态化,开启缓冲区</p>
+</li>
+<li>
+<p>开启epoll模型</p>
+</li>
+<li>
+<p>php高并发解决</p>
+<pre><code>php 的swoole
+mq
+并发调度
+</code></pre>
+</li>
+<li>
+<p>mysql的查询缓存</p>
+<pre><code>query_cache_type 为2 时即可使用查询缓存
+query_cache_size 查询缓存预留的内存
+
+</code></pre>
+</li>
+<li>
+<p>nginx负责均衡策略</p>
+<pre><code>功能强大,运行稳定
+配置简单灵活
+能够自动剔除工作不正常的后端服务器
+上传文件使用异步模式
+支持多重分配策略,可以分配权重,分配方式灵活
+
+nginx策略
+内置策略: IP Hash ,加权轮询
+扩展策略: 
+
+加权轮询策略: 首先将请求都分给高权重的机器
+IP Hash策略: Nginx内置的另一个负载均衡
+
+fair: 根据后端服务器的响应时间判断负载策略,选择最轻的机器进行分流
+
+通用Hash ,一致性Hash策略
+
+</code></pre>
+<pre><code>http {
+  upstream cluster {
+     server srv1;
+     server srv2;
+     server srv3;
+  }
+  server {
+    listen 80;
+    location / {
+       proxy_pass http://cluster
+    }
+  }
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Friends]]></title>
+        <id>https://wudengli.github.io/post/hello-friends/</id>
+        <link href="https://wudengli.github.io/post/hello-friends/">
+        </link>
+        <updated>2021-04-30T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  Welcome to <strong>Zhang Wenjun</strong>'s blog<br>
+✍️  This <strong>blog</strong> is a place for me to record my life, mood, knowledge, notes, and creativity...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  Welcome to <strong>Zhang Wenjun</strong>'s blog<br>
+✍️  This <strong>blog</strong> is a place for me to record my life, mood, knowledge, notes, and creativity...</p>
+<!-- more -->
+<p><a href="https://github.com/best7l">Github</a><br>
+<a href="https://best7l.github.io/">Blog 主页</a></p>
+<!-- [示例网站](http://fehey.com/) -->
+<!-- ## 特性👇 -->
+<!-- 📝  你可以使用最酷的 **Markdown** 语法，进行快速创作   -->
+<!-- 🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片   -->
+<!-- 🏷️  你可以对文章进行标签分组  
+
+📋  你可以自定义菜单，甚至可以创建外部链接菜单  
+
+💻  你可以在 **Windows**，**MacOS** 或 **Linux** 设备上使用此客户端  
+
+🌎  你可以使用 **𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌** 或 **Coding Pages** 向世界展示，未来将支持更多平台  
+
+💬  你可以进行简单的配置，接入 [Gitalk](https://github.com/gitalk/gitalk) 或 [DisqusJS](https://github.com/SukkaW/DisqusJS) 评论系统  
+
+🇬🇧  你可以使用**中文简体**或**英语**  
+
+🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力  
+
+🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步  
+
+🌱 当然 **Gridea** 还很年轻，有很多不足，但请相信，它会不停向前 🏃
+
+未来，它一定会成为你离不开的伙伴
+
+尽情发挥你的才华吧！ -->
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>

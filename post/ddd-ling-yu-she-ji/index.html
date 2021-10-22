@@ -1,0 +1,365 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DDD领域设计 | best7l</title>
+<link rel="shortcut icon" href="https://wudengli.github.io/favicon.ico?v=1634873811556">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://wudengli.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="DDD领域设计 | best7l - Atom Feed" href="https://wudengli.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="DDD领域设计
+简介: ddd领域设计是一种架构思想，将一个大的业务进行拆分为领域，分域里拆分为子域，子域由核心域，支撑域，通用域构成。通过限界上下文将子域进行聚合，从而向外界领域提供服务。
+领域
+将一个问题抽象为业务领域，从而达到解决问题..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://wudengli.github.io">
+  <img class="avatar" src="https://wudengli.github.io/images/avatar.png?v=1634873811556" alt="">
+  </a>
+  <h1 class="site-title">
+    best7l
+  </h1>
+  <p class="site-description">
+    Talk is cheap, give me the code!
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              DDD领域设计
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-09-25
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="ddd领域设计">DDD领域设计</h1>
+<p>简介: ddd领域设计是一种架构思想，将一个大的业务进行拆分为领域，分域里拆分为子域，子域由核心域，支撑域，通用域构成。通过限界上下文将子域进行聚合，从而向外界领域提供服务。</p>
+<h3 id="领域">领域</h3>
+<p>将一个问题抽象为业务领域，从而达到解决问题的目的，将领域划分为子域，从而将问题细分，最后聚合到一起达到解决问题的过程。</p>
+<h3 id="子域">子域</h3>
+<ul>
+<li>
+<p>核心域</p>
+<pre><code>通俗来说是业务的核心,拥有核心竞争力的子域, 其他衍生域需要通过核心域才能进行业务的实现.
+</code></pre>
+</li>
+<li>
+<p>支撑域</p>
+<pre><code>不是公司必须的领域, 但是其他的功能需要该域来支撑实现,我们称之为支撑域.
+</code></pre>
+</li>
+<li>
+<p>通用域</p>
+<pre><code>服务于多个领域, 不服务个性化需要的子域.
+</code></pre>
+</li>
+</ul>
+<h3 id="限界上下文">限界上下文</h3>
+<p>将子域中的问题边界进行划分, 从而子域中的问题进行上下承接,我们称之为限界上下文.</p>
+<h3 id="领域模型">领域模型</h3>
+<p>将一个问题建立为一个业务模型, 用于分析复杂业务类型.</p>
+<h3 id="值对象">值对象</h3>
+<p>为其添加有意义的属性，并赋予它相应的行为。我们需要将值对象看成不变对象，不要给它任何身份标识，还应该尽量避免像实体对象一样的复杂性.</p>
+<h3 id="应用服务领域服务">应用服务&amp;领域服务</h3>
+<ul>
+<li>
+<p>应用服务</p>
+<pre><code>我们的应用服务通常不处理具体业务,通过调用领域服务从而聚合来实现解决问题.
+</code></pre>
+</li>
+<li>
+<p>领域服务</p>
+<pre><code>领域服务通常取解决该领域的问题,通过调用仓库与持久化实体,从而达到服务的过程.
+</code></pre>
+</li>
+</ul>
+<h3 id="聚合">聚合</h3>
+<p>通俗来说,就是将问题细分到最小,然后将其聚集起来,解决一个大的问题的过程,我们称之为聚合.</p>
+<h3 id="工厂">工厂</h3>
+<pre><code>工厂将领域对象的使用和创建分离。
+通过使用工厂类，可以隐藏创建复杂领域对象的业务逻辑。
+工厂类可以根据调用者的需要，创建相应的领域对象。
+工厂方法可以封装聚合的内部状态。
+</code></pre>
+<h3 id="常用ddd目录模型">常用ddd目录模型</h3>
+<pre><code>-- module
+  -- interfaces 用户接口层
+          -- assembler  实现DTO之间的转换
+          -- dto 数据传输的载体
+          -- facade 提供较粗粒度的调用接口,将请求委派给一个或多个应用服务处理
+  -- application 应用层
+          -- event 事件
+                  -- publish  事件发布
+                  -- subscribe 事件订阅
+          -- service 应用服务(调用领域服务完成某个业务问题)
+  -- domain  领域层
+          -- aggregate名称 聚合根目录
+                   --contract     抽象(定义interface)
+                   --entity       实体
+                   --event        事件
+                   --repostory    仓储(处理数据)
+                   --service      领域服务(处理业务)
+                   --enums        枚举
+                   --resouces     资源类型
+                   
+          -- aggregate名称 聚合根目录
+                   --contract     抽象
+                   --entity       实体
+                   --event        事件
+                   --repostory    仓储
+                   --service      领域服务
+                   --enums        枚举
+                   --resouces     资源类型
+                   
+          -- aggregate名称 聚合根目录
+                   --contract     抽象
+                   --entity       实体
+                   --event        事件
+                   --repostory    仓储
+                   --service      领域服务
+                   --enums        枚举
+                   --resouces     资源类型
+                   
+  -- intrastructure 基础设施层
+          -- config 存放配置相关
+          -- database  数据库
+          -- cache  缓存
+          -- trait 基础服务
+          -- helper 基础组件
+          -- unit 存放第三方服务
+                   -- eventbug 事件总线
+                   -- mq 消息中间件
+</code></pre>
+<p>Repostory.php</p>
+<pre><code>&lt;?php
+
+class TestRepostory
+{
+      public function model()
+      {
+      
+      }
+      
+      public function __construct()
+      {
+      
+      }
+      
+      /**
+       *获取
+       */
+      public function get()
+      {
+      
+      }
+      
+      /**
+       *更新
+       */
+      public function update()
+      {
+      
+      }
+      
+      /**
+       *存储或更新
+       */
+      public function save()
+      {
+      
+      }
+      
+      /**
+       *储存
+       */
+      public function store()
+      {
+      
+      }
+      
+      /**
+       *释放
+       */
+      public function delete()
+      {
+      
+      }
+}
+
+?&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#ddd%E9%A2%86%E5%9F%9F%E8%AE%BE%E8%AE%A1">DDD领域设计</a><br>
+*
+<ul>
+<li><a href="#%E9%A2%86%E5%9F%9F">领域</a></li>
+<li><a href="#%E5%AD%90%E5%9F%9F">子域</a></li>
+<li><a href="#%E9%99%90%E7%95%8C%E4%B8%8A%E4%B8%8B%E6%96%87">限界上下文</a></li>
+<li><a href="#%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B">领域模型</a></li>
+<li><a href="#%E5%80%BC%E5%AF%B9%E8%B1%A1">值对象</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E9%A2%86%E5%9F%9F%E6%9C%8D%E5%8A%A1">应用服务&amp;领域服务</a></li>
+<li><a href="#%E8%81%9A%E5%90%88">聚合</a></li>
+<li><a href="#%E5%B7%A5%E5%8E%82">工厂</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8ddd%E7%9B%AE%E5%BD%95%E6%A8%A1%E5%9E%8B">常用ddd目录模型</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://wudengli.github.io/post/shi-yong-laradock-pei-zhi-kafka-ying-yong/">
+              <h3 class="post-title">
+                使用laradock配置kafka应用
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '6543bdbd544d719f31cc',
+    clientSecret: '54cca1ceaeacd3e1c06375b0ec7eeb7c1fb01d15',
+    repo: 'JTX-comment',
+    owner: 'best7l',
+    admin: ['best7l'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://wudengli.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
